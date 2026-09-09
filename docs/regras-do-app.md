@@ -16,8 +16,23 @@ O aplicativo possui somente:
 - Curso
 - Tarefas
 - Vídeos
-- Anotações
+- Obsidian
 - Progresso
+
+## Obsidian
+
+A área Obsidian substitui o antigo bloco de anotações interno.
+
+Objetivo: manter o conhecimento do curso portátil em arquivos Markdown e facilitar o envio das notas para um Vault do Obsidian.
+
+Regras:
+
+- não exigir plugin externo para o funcionamento básico;
+- permitir configurar o nome do Vault localmente no navegador;
+- permitir abrir/criar uma nota de aula no Obsidian por URI quando o aplicativo estiver instalado no computador;
+- oferecer cópia do Markdown como alternativa;
+- nunca armazenar senhas, tokens, API keys ou credenciais do Obsidian;
+- a ausência do Obsidian não pode impedir o estudo das aulas.
 
 ## Regras de desenvolvimento
 
