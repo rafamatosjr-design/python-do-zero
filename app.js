@@ -103,15 +103,16 @@
 
   function moduleCard(m) {
     const enabled = m.id === 1;
+    const moduleStatus = enabled && DATA.lessons.length >= 20 ? 'Módulo disponível' : enabled ? 'Em desenvolvimento' : 'Planejado';
     return `<article class="card module-card">
       <div><span class="badge">Módulo ${m.id}</span><h3>${m.title}</h3><p class="muted">${m.description}</p></div>
-      <div class="module-meta"><span>Aulas ${m.lessons}</span>${enabled ? '<span>Em desenvolvimento</span>' : '<span>Planejado</span>'}</div>
+      <div class="module-meta"><span>Aulas ${m.lessons}</span><span>${moduleStatus}</span></div>
       <div class="actions">${enabled ? '<a class="btn secondary" href="#/modulo/1">Abrir módulo</a>' : '<button class="btn ghost" disabled>Em breve</button>'}</div>
     </article>`;
   }
 
   function renderCourse() {
-    app.innerHTML = `<div class="page">${pageHeader('Curso', 'Trilha completa', 'A ordem segue o currículo oficial do projeto. As próximas aulas serão implementadas sem antecipar conteúdos.')}
+    app.innerHTML = `<div class="page">${pageHeader('Curso', 'Trilha completa', 'A ordem segue o currículo oficial do projeto. O Módulo 1 já está disponível; os próximos serão implementados sem antecipar conteúdos.')}
       <div class="grid three">${DATA.modules.map(moduleCard).join('')}</div>
     </div>`;
   }
@@ -120,7 +121,7 @@
     if (id !== 1) { renderCourse(); return; }
     const done = completedSet();
     app.innerHTML = `<div class="page">${pageHeader('Módulo 1', 'Fundamentos de Programação e Python', 'Aulas 1–20 · Semanas 1–4 · nível iniciante absoluto')}
-      <section class="card soft"><p><strong>Objetivo:</strong> construir a base para compreender programação, algoritmos e os primeiros programas em Python.</p><p class="muted">Nesta versão estão implementadas as Aulas 1–10. O restante será acrescentado seguindo o documento oficial do módulo.</p></section>
+      <section class="card soft"><p><strong>Objetivo:</strong> construir a base para compreender programação, algoritmos e os primeiros programas em Python.</p><p class="muted">As Aulas 1–20 estão implementadas conforme a documentação oficial do Módulo 1.</p></section>
       <section style="margin-top:20px"><h2>Aulas disponíveis</h2><div class="lesson-list">
         ${DATA.lessons.map(l => `<a class="lesson-row" href="#/aula/${l.id}"><span class="lesson-number">${l.id}</span><span class="grow"><strong>${l.title}</strong><span class="lesson-meta"><span>${l.time}</span></span></span>${done.has(l.id) ? '<span class="badge done">Concluída</span>' : '<span class="badge">Estudar</span>'}</a>`).join('')}
       </div></section>
