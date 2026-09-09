@@ -21,80 +21,73 @@ Os agentes de IA que trabalham neste projeto NÃO devem:
 - inventar novos módulos;
 - reorganizar o currículo por conta própria.
 
-O conteúdo detalhado de cada módulo será definido nos arquivos:
+O conteúdo detalhado de cada módulo será definido em arquivos específicos dentro de `docs/`, por exemplo:
 
-`modulo-01.md`  
-`modulo-02.md`  
-`modulo-03.md`  
-...  
-`modulo-12.md`
+- `docs/modulo-01.md`
+- `docs/modulo-02.md`
+- `docs/modulo-03.md`
+- ...
+- `docs/modulo-12.md`
 
 ---
 
-# TRILHA DE APRENDIZAGEM
+# 2. Trilha de aprendizagem
 
-A progressão geral é:
-
-Fundamentos
-↓
-Python
-↓
-Lógica de programação
-↓
-Python intermediário
-↓
-Terminal
-↓
-Git e GitHub
-↓
-HTML
-↓
-CSS
-↓
-JavaScript
-↓
-Internet e HTTP
-↓
-APIs
-↓
-FastAPI
-↓
-SQL
-↓
-PostgreSQL
-↓
-Full Stack
-↓
-Redes
-↓
-Linux
-↓
-Deploy
-↓
-Domínios e DNS
-↓
-Segurança
-↓
-Criptografia
-↓
+Fundamentos  
+↓  
+Python  
+↓  
+Lógica de programação  
+↓  
+Python intermediário  
+↓  
+Terminal  
+↓  
+Git e GitHub  
+↓  
+HTML  
+↓  
+CSS  
+↓  
+JavaScript  
+↓  
+Internet e HTTP  
+↓  
+APIs  
+↓  
+FastAPI  
+↓  
+SQL  
+↓  
+PostgreSQL  
+↓  
+Full Stack  
+↓  
+Redes  
+↓  
+Linux  
+↓  
+Deploy  
+↓  
+Domínios e DNS  
+↓  
+Segurança  
+↓  
+Criptografia  
+↓  
 Projeto Full Stack Final
 
 ---
 
-# MÓDULO 1
-# FUNDAMENTOS DE PROGRAMAÇÃO E PYTHON
+# MÓDULO 1 — FUNDAMENTOS DE PROGRAMAÇÃO E PYTHON
 
 **Aulas:** 1–20
 
-Objetivo:
-
-Construir a base necessária para que uma pessoa que nunca programou consiga compreender os princípios da programação e criar pequenos programas em Python.
+Objetivo: construir a base necessária para que uma pessoa que nunca programou compreenda os princípios da programação e crie pequenos programas em Python.
 
 ## Semana 1 — Primeiros conceitos
 
 ### Aula 1 — O que é programação?
-
-Conteúdos principais:
 
 - computador;
 - hardware;
@@ -110,8 +103,6 @@ Conteúdos principais:
 
 ### Aula 2 — Como o computador executa um programa
 
-Conteúdos:
-
 - CPU;
 - memória RAM;
 - armazenamento;
@@ -123,8 +114,6 @@ Conteúdos:
 
 ### Aula 3 — Preparando o Python
 
-Conteúdos:
-
 - Python;
 - interpretador;
 - VS Code;
@@ -134,8 +123,6 @@ Conteúdos:
 
 ### Aula 4 — Primeiro programa em Python
 
-Conteúdos:
-
 - `print()`;
 - strings;
 - aspas;
@@ -144,8 +131,6 @@ Conteúdos:
 - erros de sintaxe básicos.
 
 ### Aula 5 — Algoritmos e pensamento computacional
-
-Conteúdos:
 
 - decomposição de problemas;
 - sequência;
@@ -157,13 +142,9 @@ Conteúdos:
 
 **Projeto da semana:** algoritmo para cálculo de média escolar.
 
----
-
 ## Semana 2 — Dados e operações
 
 ### Aula 6 — Variáveis
-
-Conteúdos:
 
 - variável;
 - valor;
@@ -172,8 +153,6 @@ Conteúdos:
 - boas práticas.
 
 ### Aula 7 — Tipos de dados
-
-Conteúdos:
 
 - `str`;
 - `int`;
@@ -184,8 +163,6 @@ Conteúdos:
 
 ### Aula 8 — Entrada de dados
 
-Conteúdos:
-
 - `input()`;
 - conversão de tipos;
 - `int()`;
@@ -193,8 +170,6 @@ Conteúdos:
 - f-strings.
 
 ### Aula 9 — Operadores
-
-Conteúdos:
 
 - adição;
 - subtração;
@@ -208,8 +183,6 @@ Conteúdos:
 
 ### Aula 10 — Operadores lógicos
 
-Conteúdos:
-
 - `and`;
 - `or`;
 - `not`;
@@ -217,13 +190,9 @@ Conteúdos:
 
 **Projeto da semana:** calculadora básica e calculadora de desconto.
 
----
-
 ## Semana 3 — Decisões e repetições
 
 ### Aula 11 — Condições com `if`
-
-Conteúdos:
 
 - condição;
 - expressão booleana;
@@ -233,15 +202,11 @@ Conteúdos:
 
 ### Aula 12 — `elif` e `else`
 
-Conteúdos:
-
 - decisões alternativas;
 - múltiplas condições;
 - fluxo condicional.
 
 ### Aula 13 — Repetições com `for`
-
-Conteúdos:
 
 - repetição;
 - `for`;
@@ -251,8 +216,6 @@ Conteúdos:
 
 ### Aula 14 — Repetições com `while`
 
-Conteúdos:
-
 - `while`;
 - condição de repetição;
 - contador;
@@ -261,27 +224,11 @@ Conteúdos:
 
 ### Aula 15 — Desafio de lógica
 
-Construção de uma:
-
-**Calculadora com menu**
-
-Utilizando:
-
-- variáveis;
-- `input`;
-- operadores;
-- `if`;
-- `elif`;
-- `else`;
-- `while`.
-
----
+Construção de uma calculadora com menu utilizando variáveis, `input()`, operadores, `if`, `elif`, `else` e `while`.
 
 ## Semana 4 — Estruturas de dados e funções
 
 ### Aula 16 — Listas
-
-Conteúdos:
 
 - lista;
 - elemento;
@@ -293,8 +240,6 @@ Conteúdos:
 
 ### Aula 17 — Tuplas e conjuntos
 
-Conteúdos:
-
 - tuple;
 - imutabilidade;
 - set;
@@ -302,8 +247,6 @@ Conteúdos:
 - diferenças básicas entre lista, tupla e conjunto.
 
 ### Aula 18 — Dicionários
-
-Conteúdos:
 
 - chave;
 - valor;
@@ -313,8 +256,6 @@ Conteúdos:
 - lista de dicionários.
 
 ### Aula 19 — Funções
-
-Conteúdos:
 
 - `def`;
 - função;
@@ -326,42 +267,19 @@ Conteúdos:
 
 ### Aula 20 — Projeto do Módulo 1
 
-**Sistema Escolar no Terminal**
+**Sistema Escolar no Terminal** com cadastro, listagem, busca, notas, média, exclusão e menu interativo.
 
-Funções:
-
-- cadastrar aluno;
-- listar alunos;
-- buscar aluno;
-- adicionar notas;
-- calcular média;
-- excluir aluno;
-- menu interativo.
-
-Tecnologias:
-
-Python puro.
-
-Não utilizar banco de dados, arquivos ou classes neste projeto.
+Usar Python puro e lista de dicionários. Não utilizar classes, arquivos, JSON, banco de dados, APIs ou frameworks.
 
 ---
 
-# MÓDULO 2
-# PYTHON INTERMEDIÁRIO, ARQUIVOS, POO, TERMINAL E GIT
+# MÓDULO 2 — PYTHON INTERMEDIÁRIO, ARQUIVOS, POO, TERMINAL E GIT
 
 **Aulas:** 21–35
 
-Objetivo:
-
-Aprender a organizar programas maiores, salvar dados, lidar com erros, compreender Programação Orientada a Objetos e começar a utilizar ferramentas profissionais de desenvolvimento.
-
----
-
-## Semana 5 — Organização e persistência
+Objetivo: organizar programas maiores, salvar dados, lidar com erros, compreender Programação Orientada a Objetos e iniciar ferramentas profissionais de desenvolvimento.
 
 ### Aula 21 — Organizando programas com funções
-
-Conteúdos:
 
 - divisão de problemas;
 - responsabilidade de funções;
@@ -371,41 +289,30 @@ Conteúdos:
 
 ### Aula 22 — Módulos e `import`
 
-Conteúdos:
-
 - módulo;
 - `import`;
 - biblioteca padrão;
-- criação de módulos próprios;
-- organização em múltiplos arquivos.
+- módulos próprios;
+- múltiplos arquivos.
 
 ### Aula 23 — Arquivos
 
-Conteúdos:
-
-- abrir arquivos;
+- `with open(..., encoding="utf-8")`;
 - leitura;
 - escrita;
 - anexar conteúdo;
-- `with`;
-- `open()`;
-- modos `r`, `w` e `a`;
-- encoding.
+- modos `r`, `w` e `a`.
 
 ### Aula 24 — JSON
-
-Conteúdos:
 
 - estrutura JSON;
 - serialização;
 - desserialização;
 - `json.dump()`;
 - `json.load()`;
-- diferença entre dicionário Python e JSON.
+- dicionário Python ≠ JSON.
 
 ### Aula 25 — Erros e exceções
-
-Conteúdos:
 
 - erro;
 - exceção;
@@ -414,17 +321,10 @@ Conteúdos:
 - `except`;
 - `else`;
 - `finally`;
-- tratamento específico de erros.
-
-**Projeto da semana:** gerenciador de contatos com persistência.
-
----
-
-## Semana 6 — Programação Orientada a Objetos
+- tratamento específico de erros;
+- evitar `except` genérico sem necessidade.
 
 ### Aula 26 — Introdução à POO
-
-Conteúdos:
 
 - paradigma;
 - objeto;
@@ -435,8 +335,6 @@ Conteúdos:
 
 ### Aula 27 — Classes e objetos
 
-Conteúdos:
-
 - `class`;
 - instância;
 - atributos;
@@ -444,16 +342,12 @@ Conteúdos:
 
 ### Aula 28 — Atributos, métodos e `self`
 
-Conteúdos:
-
 - atributo;
 - método;
 - comportamento;
 - `self`.
 
 ### Aula 29 — `__init__` e encapsulamento básico
-
-Conteúdos:
 
 - inicialização de objetos;
 - `__init__`;
@@ -463,21 +357,9 @@ Conteúdos:
 
 ### Aula 30 — Projeto com POO
 
-Transformar o sistema escolar utilizando classes.
-
-Classes iniciais:
-
-- `Aluno`;
-- `Turma`;
-- `Curso`.
-
----
-
-## Semana 7 — Terminal e controle de versão
+Transformar o sistema escolar utilizando classes iniciais `Aluno`, `Turma` e `Curso`.
 
 ### Aula 31 — Introdução ao terminal
-
-Conteúdos:
 
 - terminal;
 - shell;
@@ -489,8 +371,6 @@ Conteúdos:
 
 ### Aula 32 — Arquivos pelo terminal
 
-Conteúdos:
-
 - `mkdir`;
 - `touch`;
 - `cp`;
@@ -499,8 +379,6 @@ Conteúdos:
 - cuidados com exclusão.
 
 ### Aula 33 — Git e controle de versão
-
-Conteúdos:
 
 - Git;
 - repositório;
@@ -515,9 +393,7 @@ Conteúdos:
 
 ### Aula 34 — GitHub
 
-Conteúdos:
-
-- Git versus GitHub;
+- Git ≠ GitHub;
 - repositório local;
 - repositório remoto;
 - `origin`;
@@ -528,31 +404,19 @@ Conteúdos:
 
 ### Aula 35 — Branches e merge
 
-Conteúdos:
-
 - branch;
 - `main`;
-- criação de branch;
-- troca de branch;
+- criação e troca de branch;
 - merge;
-- conflitos em nível introdutório.
+- conflitos introdutórios.
 
 **Projeto do módulo:** Sistema de Contatos versionado com Git e GitHub.
 
 ---
 
-# MÓDULO 3
-# DESENVOLVIMENTO FRONT-END
+# MÓDULO 3 — DESENVOLVIMENTO FRONT-END
 
 **Aulas:** 36–50
-
-Objetivo:
-
-Aprender como interfaces web são construídas utilizando HTML, CSS e JavaScript.
-
----
-
-## Semana 8 — HTML
 
 ### Aula 36 — Como funciona uma página web
 
@@ -561,9 +425,9 @@ Aprender como interfaces web são construídas utilizando HTML, CSS e JavaScript
 - site;
 - aplicação web;
 - front-end;
-- HTML;
-- CSS;
-- JavaScript.
+- HTML estrutura;
+- CSS apresentação;
+- JavaScript interatividade.
 
 ### Aula 37 — Estrutura de um documento HTML
 
@@ -595,7 +459,8 @@ Aprender como interfaces web são construídas utilizando HTML, CSS e JavaScript
 - `article`;
 - `aside`;
 - `footer`;
-- acessibilidade.
+- acessibilidade;
+- SEO introdutório sem exageros.
 
 ### Aula 40 — Formulários HTML
 
@@ -605,13 +470,7 @@ Aprender como interfaces web são construídas utilizando HTML, CSS e JavaScript
 - `select`;
 - `textarea`;
 - `button`;
-- validação HTML básica.
-
-**Mini-projeto:** formulário de cadastro de aluno.
-
----
-
-## Semana 9 — CSS
+- placeholder não substitui label.
 
 ### Aula 41 — Introdução ao CSS
 
@@ -620,6 +479,7 @@ Aprender como interfaces web são construídas utilizando HTML, CSS e JavaScript
 - valor;
 - classe;
 - ID;
+- cascade;
 - stylesheet externo.
 
 ### Aula 42 — Box Model
@@ -628,7 +488,7 @@ Aprender como interfaces web são construídas utilizando HTML, CSS e JavaScript
 - padding;
 - border;
 - margin;
-- `box-sizing`.
+- `box-sizing: border-box`.
 
 ### Aula 43 — Tipografia, cores e unidades
 
@@ -643,8 +503,8 @@ Aprender como interfaces web são construídas utilizando HTML, CSS e JavaScript
 
 ### Aula 44 — Flexbox e Grid
 
-- Flexbox;
-- Grid;
+- Flexbox como ferramenta principalmente unidimensional;
+- Grid como ferramenta principalmente bidimensional;
 - alinhamento;
 - distribuição;
 - layouts.
@@ -657,24 +517,17 @@ Aprender como interfaces web são construídas utilizando HTML, CSS e JavaScript
 - media queries;
 - mobile-first.
 
-**Projeto:** interface responsiva.
-
----
-
-## Semana 10 — JavaScript
-
 ### Aula 46 — JavaScript para quem conhece Python
 
-- JavaScript;
-- `let`;
-- `const`;
+- `let` e `const` como base inicial;
 - tipos;
 - arrays;
 - objetos;
 - condições;
 - loops;
 - funções;
-- diferenças iniciais entre Python e JavaScript.
+- diferenças iniciais entre Python e JavaScript;
+- não usar `var` como abordagem principal.
 
 ### Aula 47 — DOM
 
@@ -698,49 +551,42 @@ Aprender como interfaces web são construídas utilizando HTML, CSS e JavaScript
 - `value`;
 - `trim()`;
 - `preventDefault()`;
-- validação no navegador.
+- validação no navegador;
+- validação front-end não é mecanismo de segurança suficiente.
 
 ### Aula 50 — Projeto Front-end
 
-**Gerenciador de tarefas no navegador**
-
-Funções:
-
-- criar;
-- listar;
-- editar;
-- concluir;
-- excluir;
-- filtrar tarefas.
-
-Pode introduzir `localStorage`, deixando claro que não é um banco de dados de servidor.
+**Gerenciador de tarefas no navegador** com criar, listar, editar, concluir, excluir e filtrar tarefas. Pode introduzir `localStorage`, deixando claro que não é banco de dados de servidor e não deve armazenar segredos.
 
 ---
 
-# MÓDULO 4
-# INTERNET, HTTP E APIs
+# MÓDULO 4 — INTERNET, HTTP E APIs
 
 **Aulas:** 51–60
-
-## Semana 11 — Como a Internet funciona
 
 ### Aula 51 — Cliente e servidor
 
 ### Aula 52 — URL, domínio, IP e porta
 
+Explicar scheme, host, path e query.
+
 ### Aula 53 — Introdução ao HTTP
 
 ### Aula 54 — Request e Response
 
+- headers;
+- body;
+- status.
+
 ### Aula 55 — HTTP versus HTTPS
 
----
-
-## Semana 12 — APIs
+HTTPS é HTTP protegido por TLS; não apresentar HTTPS como garantia absoluta de segurança do sistema.
 
 ### Aula 56 — O que é uma API
 
 ### Aula 57 — REST e recursos
+
+REST como estilo arquitetural/conjunto de convenções, sem tratá-lo como protocolo.
 
 ### Aula 58 — Métodos HTTP
 
@@ -748,12 +594,12 @@ Pode introduzir `localStorage`, deixando claro que não é um banco de dados de 
 - POST;
 - PUT;
 - PATCH;
-- DELETE.
+- DELETE;
+- sem afirmar que o método determina obrigatoriamente uma operação de banco de dados.
 
-### Aula 59 — JSON e códigos HTTP
+### Aula 59 — JSON e códigos de status
 
-Estudar inicialmente:
-
+- Python dict ≠ objeto JavaScript ≠ JSON;
 - 200;
 - 201;
 - 204;
@@ -764,49 +610,48 @@ Estudar inicialmente:
 - 422;
 - 500.
 
-### Aula 60 — Fetch API no JavaScript
+### Aula 60 — Consumindo APIs com `fetch`
 
-- `fetch`;
 - Promise introdutória;
-- `async`;
-- `await`;
+- `async`/`await`;
 - `response.ok`;
-- consumo de API.
+- explicar que `fetch` não rejeita uma Promise apenas por receber HTTP 4xx/5xx.
 
 ---
 
-# MÓDULO 5
-# BACK-END COM PYTHON E FASTAPI
+# MÓDULO 5 — BACK-END COM FASTAPI
 
 **Aulas:** 61–70
 
-## Semana 13
+### Aula 61 — O que faz o back-end
 
-### Aula 61 — O que é Back-end
+### Aula 62 — FastAPI e ambiente virtual
 
-### Aula 62 — Introdução ao FastAPI
+- documentação atual;
+- ambiente virtual;
+- instalação;
+- execução inicial.
 
-### Aula 63 — Criando uma rota GET
+### Aula 63 — Criando rota GET
 
-### Aula 64 — Path Parameters e Query Parameters
+### Aula 64 — Path e Query Parameters
 
-### Aula 65 — Request Body e validação
+### Aula 65 — Request Body e Pydantic
 
----
+- validação;
+- modelo de request não é necessariamente tabela de banco de dados.
 
-## Semana 14
+### Aula 66 — POST e status 201
 
-### Aula 66 — Criando recursos com POST
-
-### Aula 67 — Atualizações com PUT e PATCH
+### Aula 67 — PUT e PATCH
 
 ### Aula 68 — DELETE
 
-### Aula 69 — Status codes e tratamento de erros
+### Aula 69 — Erros e códigos de status
 
-### Aula 70 — Projeto de API CRUD
+### Aula 70 — Projeto API de alunos em memória
 
-Criar API de alunos:
+Endpoints:
 
 - `GET /alunos`
 - `GET /alunos/{id}`
@@ -814,164 +659,160 @@ Criar API de alunos:
 - `PATCH /alunos/{id}`
 - `DELETE /alunos/{id}`
 
-Nesta etapa, os dados podem inicialmente permanecer em memória.
+Sem banco de dados neste projeto.
 
 ---
 
-# MÓDULO 6
-# BANCO DE DADOS, SQL E POSTGRESQL
+# MÓDULO 6 — POSTGRESQL E SQL
 
 **Aulas:** 71–80
 
-## Semana 15
+### Aula 71 — Banco de dados e SGBD
 
-### Aula 71 — Introdução a banco de dados
+- persistência;
+- banco de dados;
+- sistema gerenciador de banco de dados.
 
-### Aula 72 — SGBD e PostgreSQL
+### Aula 72 — PostgreSQL
 
-### Aula 73 — Tabelas, linhas e colunas
+Explicar que SQL é linguagem e PostgreSQL é um SGBD.
 
-### Aula 74 — Primary Key e Foreign Key
+### Aula 73 — Tabelas, linhas, colunas e tipos
+
+### Aula 74 — Chaves primárias e estrangeiras
+
+Explicar que chave primária não precisa obrigatoriamente ser inteiro sequencial.
 
 ### Aula 75 — Relacionamentos
 
 - 1:1;
 - 1:N;
-- N:N.
+- N:N;
+- tabela de junção.
+
+### Aula 76 — `CREATE TABLE` e `INSERT`
+
+### Aula 77 — `SELECT` e `WHERE`
+
+Evitar ensinar `SELECT *` como padrão universal.
+
+### Aula 78 — `UPDATE` e `DELETE`
+
+Destacar risco de executar sem `WHERE`.
+
+### Aula 79 — Ordenação e agregações
+
+- `ORDER BY`;
+- `COUNT`;
+- `SUM`;
+- `AVG`;
+- `MIN`;
+- `MAX`;
+- `GROUP BY`.
+
+### Aula 80 — JOINs
+
+- `INNER JOIN`;
+- `LEFT JOIN`;
+- banco escolar com `alunos`, `cursos` e `matriculas`.
+
+Ensinar SQL antes de ORM.
 
 ---
 
-## Semana 16
-
-### Aula 76 — CREATE TABLE e INSERT
-
-### Aula 77 — SELECT e WHERE
-
-### Aula 78 — UPDATE e DELETE
-
-### Aula 79 — ORDER BY, funções agregadas e GROUP BY
-
-### Aula 80 — JOIN e projeto de banco de dados
-
-Projeto:
-
-Banco escolar com:
-
-- alunos;
-- cursos;
-- matrículas.
-
-Ensinar SQL antes de esconder operações atrás de ORM.
-
----
-
-# MÓDULO 7
-# DESENVOLVIMENTO FULL STACK
+# MÓDULO 7 — FULL STACK
 
 **Aulas:** 81–85
 
-## Semana 17
+### Aula 81 — Arquitetura completa
 
-### Aula 81 — Arquitetura Full Stack
+HTML/CSS/JavaScript → HTTP → FastAPI → SQL → PostgreSQL.
 
-Fluxo:
+### Aula 82 — Front-end consumindo a API
 
-HTML/CSS/JavaScript
-↓
-HTTP
-↓
-FastAPI
-↓
-SQL
-↓
-PostgreSQL
+- CORS;
+- explicar que CORS não é autenticação.
 
-### Aula 82 — Front-end consumindo API
+### Aula 83 — FastAPI + PostgreSQL
 
-### Aula 83 — FastAPI conectado ao PostgreSQL
+- conexão;
+- consultas;
+- transações;
+- ORM pode ser apresentado como abstração, não como substituto conceitual de SQL ou do banco.
 
-### Aula 84 — CRUD completo
+### Aula 84 — CRUD de ponta a ponta
 
 ### Aula 85 — Projeto Full Stack v1
 
-Criar sistema de tarefas utilizando:
+Gerenciador de tarefas sem login.
 
-- HTML;
-- CSS;
-- JavaScript;
-- FastAPI;
-- PostgreSQL.
+Tabela inicial:
+
+`tarefas(id, titulo, descricao, status, created_at)`
 
 ---
 
-# MÓDULO 8
-# REDES DE COMPUTADORES
+# MÓDULO 8 — REDES
 
 **Aulas:** 86–95
 
-## Semana 18
-
-### Aula 86 — Por que um programador precisa entender redes
+### Aula 86 — Por que programadores precisam entender redes
 
 ### Aula 87 — Modelo OSI
 
-Camadas:
+Sete camadas como modelo conceitual de referência; não ensinar como se cada camada fosse um programa separado.
 
-7. Aplicação  
-6. Apresentação  
-5. Sessão  
-4. Transporte  
-3. Rede  
-2. Enlace  
-1. Física
-
-O modelo OSI deve ser apresentado como modelo conceitual de referência.
-
-### Aula 88 — TCP/IP e comparação com OSI
+### Aula 88 — TCP/IP versus OSI
 
 ### Aula 89 — IPv4 e IPv6
 
-### Aula 90 — IP público, IP privado, localhost, gateway e NAT
+- IPv4: 32 bits;
+- IPv6: 128 bits.
 
----
+### Aula 90 — IP público, privado, localhost, gateway e NAT
 
-## Semana 19
+- `10.0.0.0/8`;
+- `172.16.0.0/12`;
+- `192.168.0.0/16`;
+- `127.0.0.1` e `::1`;
+- NAT não é sinônimo de firewall.
 
 ### Aula 91 — Máscara, CIDR e sub-redes
 
+- introdução;
+- exemplo `/24`.
+
 ### Aula 92 — Portas e sockets
 
-Portas importantes como exemplos:
+Portas comuns:
 
-- 22 — SSH;
-- 53 — DNS;
-- 80 — HTTP;
-- 443 — HTTPS.
+- 22 SSH;
+- 53 DNS;
+- 80 HTTP;
+- 443 HTTPS.
+
+DNS pode usar UDP e TCP.
 
 ### Aula 93 — TCP versus UDP
 
+Não ensinar “UDP é sempre mais rápido” como regra absoluta.
+
 ### Aula 94 — HTTP, HTTPS, DNS e ICMP
+
+Explicar que `ping` usa ICMP, não TCP.
 
 ### Aula 95 — SSH, FTP, SFTP e Telnet
 
-Deixar claro:
-
-- SSH é utilizado para acesso remoto seguro;
-- Telnet não deve ser apresentado como alternativa segura;
-- SFTP não é a mesma coisa que FTPS.
+- SFTP funciona sobre SSH e não é o mesmo que FTPS;
+- Telnet é inseguro para administração remota sensível.
 
 ---
 
-# MÓDULO 9
-# LINUX
+# MÓDULO 9 — LINUX
 
 **Aulas:** 96–100
 
-## Semana 20
-
-### Aula 96 — Linux e sistema de arquivos
-
-Diretórios introdutórios:
+### Aula 96 — Estrutura de diretórios Linux
 
 - `/`;
 - `/home`;
@@ -982,12 +823,11 @@ Diretórios introdutórios:
 
 ### Aula 97 — Caminhos absolutos e relativos
 
-- `/`;
 - `.`;
 - `..`;
 - `~`.
 
-### Aula 98 — Manipulação de arquivos
+### Aula 98 — Comandos básicos
 
 - `pwd`;
 - `ls`;
@@ -1000,68 +840,75 @@ Diretórios introdutórios:
 - `cat`;
 - `less`.
 
-### Aula 99 — Usuários, grupos e permissões
+### Aula 99 — Permissões
 
-- proprietário;
-- grupo;
-- outros;
-- leitura;
-- escrita;
-- execução.
+- owner;
+- group;
+- others;
+- read;
+- write;
+- execute;
+- explicar nuance do bit `x` em diretórios.
 
-### Aula 100 — chmod, chown, processos e variáveis de ambiente
+### Aula 100 — `chmod`, `chown`, processos e ambiente
 
-- `chmod`;
-- permissões simbólicas;
-- permissões numéricas;
+- modo simbólico antes do numérico;
+- valores 4, 2 e 1;
+- `chmod 755`;
 - `chown`;
-- processos;
 - `ps`;
 - `top`;
+- `kill` em laboratório seguro;
+- variáveis de ambiente;
 - `PATH`;
-- variáveis de ambiente.
+- não incentivar uso indiscriminado de `sudo`.
 
 ---
 
-# MÓDULO 10
-# HOSPEDAGEM, DEPLOY, DOMÍNIOS E DNS
+# MÓDULO 10 — DEPLOY, DOMÍNIOS E DNS
 
 **Aulas:** 101–110
-
-## Semana 21 — Deploy
 
 ### Aula 101 — Localhost versus Internet
 
 ### Aula 102 — Servidores e VPS
 
-### Aula 103 — Cloud e plataformas gerenciadas
+Explicar servidor como papel/software/infraestrutura, não apenas como “um computador especial”.
 
-Introdução conceitual a:
+### Aula 103 — Cloud
 
 - IaaS;
 - PaaS;
-- SaaS.
+- SaaS introdutório.
 
-### Aula 104 — Desenvolvimento, teste e produção
+### Aula 104 — Ambientes
+
+- desenvolvimento;
+- testes;
+- produção.
 
 ### Aula 105 — Deploy
-
-Conteúdos:
 
 - dependências;
 - comando de inicialização;
 - logs;
 - variáveis de ambiente;
-- secrets;
+- segredos;
+- `.env` não versionado;
 - banco de produção.
 
----
+### Aula 106 — Domínios
 
-## Semana 22 — Domínios e DNS
-
-### Aula 106 — Domínios e registradores
+- registrador;
+- TLD;
+- subdomínio.
 
 ### Aula 107 — Como funciona o DNS
+
+- resolver;
+- root;
+- TLD;
+- servidor autoritativo.
 
 ### Aula 108 — Registros A e AAAA
 
@@ -1070,41 +917,33 @@ Conteúdos:
 
 ### Aula 109 — CNAME, MX, TXT e NS
 
-- CNAME → alias para hostname;
-- MX → servidores de e-mail;
-- TXT → informações textuais e verificações;
-- NS → nameservers.
+- CNAME aponta para outro hostname, não diretamente para IP;
+- MX para email;
+- TXT;
+- NS.
 
-### Aula 110 — TTL, subdomínios e HTTPS em produção
+### Aula 110 — TTL, cache, subdomínios e HTTPS
 
-Explicar claramente:
-
-DNS ≠ hospedagem
-
-DNS ≠ HTTPS
-
-Domínio ≠ URL completa
+Explicar que DNS e HTTPS resolvem problemas diferentes.
 
 ---
 
-# MÓDULO 11
-# SEGURANÇA DA INFORMAÇÃO E DESENVOLVIMENTO SEGURO
+# MÓDULO 11 — SEGURANÇA DA INFORMAÇÃO
 
 **Aulas:** 111–115
 
-## Semana 23
+Todo conteúdo de segurança deste curso é defensivo e educacional.
 
-### Aula 111 — Fundamentos de Segurança da Informação
+### Aula 111 — Tríade CIA
 
-Tríade CIA:
+- confidencialidade;
+- integridade;
+- disponibilidade;
+- ativos;
+- controles;
+- incidentes.
 
-- Confidencialidade;
-- Integridade;
-- Disponibilidade.
-
-### Aula 112 — Ameaça, vulnerabilidade e risco
-
-Diferenciar:
+### Aula 112 — Risco
 
 - ativo;
 - ameaça;
@@ -1114,528 +953,295 @@ Diferenciar:
 
 ### Aula 113 — Autenticação e autorização
 
-Diferenciar claramente:
+- autenticação ≠ autorização;
+- sessões;
+- tokens em nível conceitual;
+- evitar ensinar autenticação caseira insegura como padrão.
 
-**Autenticação:** quem é você?
-
-**Autorização:** o que você pode fazer?
-
-### Aula 114 — Desenvolvimento seguro
-
-Conteúdos:
+### Aula 114 — Segurança no desenvolvimento
 
 - validação;
 - menor privilégio;
-- gerenciamento de secrets;
+- segredos;
 - dependências;
 - logs;
 - backups;
 - autorização no servidor;
-- tratamento seguro de erros.
+- mensagens de erro seguras.
 
-### Aula 115 — Segurança Web e OWASP Top 10
+### Aula 115 — OWASP Top 10 atual
 
-Utilizar a versão atual do OWASP Top 10 definida na documentação oficial quando a aula for desenvolvida.
+Usar a edição oficial mais recente disponível, incluindo conceitos como:
 
-Abordagem:
+- Broken Access Control;
+- Security Misconfiguration;
+- Software Supply Chain Failures;
+- Cryptographic Failures;
+- Injection;
+- Insecure Design;
+- Authentication Failures;
+- categorias relacionadas a integridade, logging e tratamento de condições excepcionais conforme versão vigente.
 
-DEFENSIVA.
-
-Ensinar:
-
-- causas;
-- riscos;
-- prevenção;
-- boas práticas.
-
-Não transformar a aula em treinamento de ataque contra sistemas reais.
+Ensinar consultas parametrizadas e prevenção de XSS em nível defensivo. Não incluir exploração ofensiva de sistemas reais.
 
 ---
 
-# MÓDULO 12
-# CRIPTOGRAFIA E PROJETO FINAL
+# MÓDULO 12 — CRIPTOGRAFIA E PROJETO FINAL
 
 **Aulas:** 116–120
 
-## Semana 24
+### Aula 116 — Conceitos fundamentais de criptografia
 
-### Aula 116 — Introdução à criptografia
-
-Ensinar diferenças:
-
-- texto puro;
-- texto cifrado;
+- plaintext;
+- ciphertext;
 - chave;
-- criptografia;
-- hash;
-- codificação.
-
-Destacar:
-
-CRIPTOGRAFIA ≠ HASH ≠ CODIFICAÇÃO
-
-Base64 NÃO é criptografia.
+- criptografia ≠ hash ≠ encoding;
+- Base64 não é criptografia.
 
 ### Aula 117 — Criptografia simétrica
 
-Conteúdos:
-
-- uma chave compartilhada;
-- cifrar;
-- decifrar;
+- conceito;
 - AES em nível conceitual;
-- gerenciamento de chaves.
-
-Não ensinar criação de algoritmos criptográficos próprios.
+- não criar algoritmos criptográficos caseiros.
 
 ### Aula 118 — Criptografia assimétrica
 
-Conteúdos:
-
 - chave pública;
 - chave privada;
-- RSA em nível conceitual;
-- ECC em nível conceitual;
-- assinatura digital;
-- troca segura de informações.
+- RSA;
+- ECC;
+- assinaturas digitais;
+- evitar simplificação incorreta de “assinatura = criptografar com chave privada”.
 
-### Aula 119 — Hashes, senhas, certificados e TLS
+### Aula 119 — Hash, salt, senhas, certificados e TLS
 
-Conteúdos:
+- não armazenar senha em texto puro;
+- não armazenar senha com criptografia reversível;
+- não usar MD5, SHA-1 ou SHA-256 puro como mecanismo de armazenamento de senha;
+- utilizar algoritmo moderno de password hashing, como Argon2id quando apropriado;
+- salt não é segredo;
+- certificados;
+- TLS.
 
-- função hash;
-- salt;
-- armazenamento de senhas;
-- password hashing;
-- certificados digitais;
-- TLS;
-- HTTPS.
+### Aula 120 — Projeto Full Stack Final
 
-Nunca recomendar:
+**Gerenciador de tarefas com usuários**.
 
-- senha em texto puro;
-- criptografia reversível como armazenamento comum de senha;
-- MD5 para senhas;
-- SHA-1 para senhas;
-- SHA-256 puro como mecanismo de armazenamento de senhas.
+Funcionalidades:
 
-Utilizar algoritmos apropriados de password hashing conforme práticas atuais quando o conteúdo detalhado for produzido.
-
-### Aula 120 — PROJETO FINAL FULL STACK
-
-Criar um:
-
-# SISTEMA FULL STACK DE GERENCIAMENTO DE TAREFAS
-
----
-
-# PROJETO FINAL — REQUISITOS
-
-O sistema deverá permitir:
-
-- cadastro de usuário;
+- cadastro;
 - login;
 - logout;
-- autenticação;
-- criação de tarefas;
-- listagem de tarefas;
-- visualização;
-- edição;
-- conclusão;
-- exclusão;
-- isolamento das tarefas por usuário.
+- CRUD de tarefas;
+- cada usuário acessa somente seus próprios dados;
+- autorização verificada no back-end.
 
-Tecnologias principais:
+Estrutura conceitual:
 
-## Front-end
+`usuarios(id, nome, email, senha_hash, created_at)`
 
-- HTML;
-- CSS;
-- JavaScript.
+`tarefas(id, usuario_id, titulo, descricao, status, created_at, updated_at)`
 
-## Back-end
+Endpoints mínimos:
 
-- Python;
-- FastAPI.
+- `POST /usuarios`
+- `POST /login`
+- `GET /tarefas`
+- `POST /tarefas`
+- `GET /tarefas/{id}`
+- `PATCH /tarefas/{id}`
+- `DELETE /tarefas/{id}`
 
-## Banco de dados
+Requisitos:
 
-- PostgreSQL.
-
-## Infraestrutura
-
-- Git;
-- GitHub;
-- servidor/hospedagem;
-- domínio;
-- DNS;
-- HTTPS.
-
-## Segurança
-
-- password hashing;
+- password hashing seguro;
 - autenticação;
 - autorização;
-- validação de entrada;
-- secrets fora do código;
-- variáveis de ambiente;
+- validação;
+- consultas parametrizadas ou abstração segura equivalente;
+- segredos em variáveis de ambiente;
 - tratamento de erros;
 - HTTPS em produção;
-- isolamento de dados por usuário.
+- dependências atualizadas;
+- isolamento de dados por usuário;
+- deploy;
+- domínio;
+- DNS;
+- README;
+- versionamento Git.
+
+Arquitetura final:
+
+Internet → Domínio → DNS → HTTPS → Servidor → Front-end/Back-end → API → PostgreSQL
 
 ---
 
-# ARQUITETURA FINAL
+# 3. Estrutura pedagógica oficial
 
-O estudante deverá compreender:
+Sempre que aplicável, cada aula deve seguir:
 
-USUÁRIO
-↓
-NAVEGADOR
-↓
-HTML + CSS + JAVASCRIPT
-↓
-HTTPS
-↓
-API
-↓
-FASTAPI / PYTHON
-↓
-SQL
-↓
-POSTGRESQL
+Conceito  
+→ Explicação  
+→ Exemplo cotidiano  
+→ Exemplo de programação  
+→ Código  
+→ Explicação linha por linha  
+→ Prática guiada  
+→ Exercícios  
+→ Desafio  
+→ Revisão
 
-E, na infraestrutura:
+As aulas devem durar aproximadamente 50–60 minutos e reduzir gradualmente a quantidade de ajuda fornecida.
 
-DOMÍNIO
-↓
-DNS
-↓
-SERVIDOR
-↓
-APLICAÇÃO
+O estudante deve digitar o código sempre que possível.
+
+Nenhum termo técnico deve ser presumido antes de ser explicado.
 
 ---
 
-# PROJETOS DO CURSO
+# 4. Exercícios, dicas e soluções
 
-Durante o curso serão desenvolvidos progressivamente:
+Quando houver solução, usar esta progressão:
 
-## Projeto 1
+1. Ver uma dica
+2. Ver segunda dica
+3. Ver solução comentada
 
-Sistema Escolar no Terminal
+A solução começa escondida e deve explicar raciocínio, não apenas exibir o código final.
 
-Python básico.
+Incluir periodicamente:
 
-## Projeto 2
+- “Qual será a saída?”;
+- “Encontre o erro”.
 
-Sistema de Contatos
+Exemplos propositalmente incorretos devem conter claramente:
 
-Python + arquivos + JSON + POO + Git.
-
-## Projeto 3
-
-Gerenciador de tarefas Front-end
-
-HTML + CSS + JavaScript.
-
-## Projeto 4
-
-API CRUD
-
-Python + FastAPI.
-
-## Projeto 5
-
-Banco escolar
-
-PostgreSQL + SQL.
-
-## Projeto 6
-
-Aplicação Full Stack v1
-
-Front-end + FastAPI + PostgreSQL.
-
-## Projeto Final
-
-Sistema completo de gerenciamento de tarefas com usuários.
+> EXEMPLO COM ERRO — NÃO COPIE COMO SOLUÇÃO
 
 ---
 
-# PROGRESSÃO PEDAGÓGICA
+# 5. Vídeos complementares validados
 
-No início do curso:
+Somente utilizar vídeos registrados na documentação.
 
-- fornecer mais orientação;
-- explicar código linha por linha;
-- apresentar exemplos pequenos;
-- utilizar prática guiada.
+IDs validados atualmente:
 
-Conforme o curso avançar:
+- Python — primeiros comandos: `31llNGKWDdo`
+- Python — condições: `K10u3XIf1-Q`
+- Python — listas: `N1hTsbW50eM`
+- Python — exceções: `xz2B3bfNjEk`
+- Python — POO: `dJyZmwLpxnE`
+- Git: `xEKo29OWILE`
+- HTML/CSS: `jgQjeqGRdgA`
+- JavaScript: `vEwPnjqWQ-g`
+- FastAPI: `R26iojTwUv8`
+- PostgreSQL/SQL: `9cAKQWodpvM`
+- OSI: `bmgvIlvVAlc`
+- OSI versus TCP/IP: `c5vfwNBbl4g`
 
-reduzir progressivamente a quantidade de código entregue pronto.
+Quando não houver vídeo validado:
 
-O estudante deve passar de:
+> Não há vídeo complementar selecionado para esta aula.
 
-COPIAR E ENTENDER
-
-para:
-
-COMPLETAR
-
-depois:
-
-MODIFICAR
-
-depois:
-
-PLANEJAR
-
-e finalmente:
-
-CONSTRUIR.
+Nunca inventar link, URL, ID ou nome de vídeo.
 
 ---
 
-# ROTINA SUGERIDA
+# 6. Progresso
 
-Segunda-feira:
-
-novo conteúdo.
-
-Terça-feira:
-
-prática.
-
-Quarta-feira:
-
-novo conteúdo.
-
-Quinta-feira:
-
-programação e exercícios.
-
-Sexta-feira:
-
-desafio e revisão.
-
----
-
-# REVISÕES
-
-Realizar revisões periódicas.
-
-Ao final de cada módulo:
-
-- 4 questões conceituais;
-- 3 questões de leitura de código ou comandos;
-- 2 exercícios práticos;
-- 1 desafio.
-
-Total:
-
-10 questões.
-
-A cada três módulos, realizar também uma revisão cumulativa.
-
----
-
-# REGRAS SOBRE SOLUÇÕES
-
-As respostas dos exercícios não devem aparecer automaticamente.
-
-Fluxo:
-
-EXERCÍCIO
-↓
-VER UMA DICA
-↓
-VER SEGUNDA DICA
-↓
-VER SOLUÇÃO COMENTADA
-
-A solução deve explicar o raciocínio.
-
----
-
-# VÍDEOS
-
-Vídeos são complementares.
-
-Eles NÃO substituem o conteúdo escrito.
-
-Não é obrigatório assistir ao vídeo para concluir uma aula.
-
-Nunca inventar URLs ou IDs.
-
-Quando não existir vídeo validado:
-
-“Não há vídeo complementar selecionado para esta aula.”
-
----
-
-# PROGRESSO
-
-O curso possui exatamente:
-
-120 aulas.
+O curso possui 120 aulas.
 
 Fórmula principal:
 
-aulas concluídas / 120 × 100
+`aulas concluídas / 120 × 100`
 
-Exemplos:
+Abrir uma aula não significa concluí-la.
 
-1 aula concluída:
+A conclusão só acontece quando o estudante usa a ação explícita de marcar a aula como concluída.
 
-1 / 120
-
-20 aulas concluídas:
-
-20 / 120
-
-60 aulas concluídas:
-
-60 / 120
-
-120 aulas concluídas:
-
-120 / 120 = 100%
-
-Abrir uma aula não deve marcá-la como concluída.
+Não bloquear artificialmente aulas futuras; destacar apenas a próxima recomendada.
 
 ---
 
-# CHECKPOINTS
+# 7. Checkpoints
 
-Ao final de cada módulo, mostrar ao estudante uma lista:
+Realizar revisões periódicas dentro dos módulos.
 
-EU CONSIGO...
+No Módulo 1, prever revisões após as Aulas 5, 10, 15 e uma revisão final após a Aula 20.
 
-com as principais competências desenvolvidas naquele módulo.
-
-O estudante pode utilizar o checklist como autoavaliação.
+Projetos devem utilizar apenas conhecimentos já ensinados até aquele ponto.
 
 ---
 
-# DIFERENÇAS CONCEITUAIS IMPORTANTES
+# 8. Distinções conceituais que devem ser preservadas
 
-Ao longo do curso, destacar:
-
-Git ≠ GitHub
-
-HTML ≠ linguagem de programação tradicional
-
-JavaScript ≠ Java
-
-HTTP ≠ HTTPS
-
-API ≠ banco de dados
-
-JSON ≠ objeto JavaScript
-
-JSON ≠ dicionário Python
-
-SQL ≠ PostgreSQL
-
-ORM ≠ banco de dados
-
-IP ≠ domínio
-
-Domínio ≠ URL completa
-
-DNS ≠ hospedagem
-
-DNS ≠ HTTPS
-
-TCP ≠ IP
-
-TCP ≠ UDP
-
-SSH ≠ Telnet
-
-SFTP ≠ FTPS
-
-NAT ≠ firewall
-
-Autenticação ≠ autorização
-
-Hash ≠ criptografia
-
-Base64 ≠ criptografia
-
-HTTPS ≠ aplicação completamente segura
+- Python não substitui JavaScript no navegador.
+- Git não é GitHub.
+- SQL não é PostgreSQL.
+- Python dict não é JSON.
+- Objeto JavaScript não é JSON.
+- Request model não é automaticamente tabela de banco.
+- ORM não é banco de dados e não substitui o entendimento de SQL.
+- CORS não é autenticação.
+- NAT não é firewall.
+- DNS não é HTTPS.
+- SFTP não é FTPS.
+- Encoding não é criptografia.
+- Hash não é criptografia reversível.
+- HTTPS protege o transporte com TLS, mas não torna toda a aplicação automaticamente segura.
 
 ---
 
-# CONTEÚDOS FORA DO ESCOPO INICIAL
+# 9. Fora do escopo principal
 
-Não adicionar ao currículo básico sem solicitação:
+Não adicionar por iniciativa própria:
 
-- React;
-- Vue;
-- Angular;
-- Next.js;
-- Django;
-- Flask;
-- Kubernetes;
-- Terraform;
-- microserviços;
-- Kafka;
-- Redis;
-- GraphQL;
-- Machine Learning;
-- Data Science;
-- programação de malware;
-- exploração ofensiva de sistemas reais;
-- engenharia reversa avançada;
-- Assembly;
-- C;
-- C++;
-- criação de algoritmos criptográficos próprios.
-
-Esses assuntos podem ser estudados futuramente depois da conclusão da base.
+- marketplace;
+- pagamentos;
+- ranking;
+- moedas;
+- comunidade;
+- chat público;
+- feed social;
+- certificados;
+- IA interna;
+- execução remota arbitrária de código;
+- exploração ofensiva de sistemas reais.
 
 ---
 
-# APÓS O CURSO
+# 10. Caminhos pós-curso
 
-Depois das 120 aulas, possíveis caminhos de aprofundamento:
+Após concluir as 120 aulas, possíveis aprofundamentos incluem:
 
 - Python avançado;
-- estruturas de dados e algoritmos;
+- frameworks back-end;
+- front-end avançado;
 - testes automatizados;
-- FastAPI avançado;
-- PostgreSQL avançado;
-- Docker;
-- Cloud;
+- Docker e containers;
 - DevOps;
-- segurança;
-- Front-end avançado;
-- frameworks JavaScript.
+- cloud;
+- bancos NoSQL;
+- arquitetura de software;
+- cibersegurança defensiva;
+- ciência de dados;
+- automação.
 
-Esses caminhos NÃO fazem parte das 120 aulas iniciais.
+Esses assuntos não devem ser antecipados de modo a prejudicar a progressão do curso principal.
 
 ---
 
-# REGRA FINAL PARA AGENTES DE IA
-
-Este arquivo é o MAPA OFICIAL do curso.
+# 11. Regra final para agentes de IA
 
 Antes de criar ou alterar conteúdo pedagógico:
 
-1. Ler `documentos/regras-do-app.md`.
-2. Ler `documentos/curriculo.md`.
-3. Ler o arquivo específico do módulo.
+1. Ler `docs/regras-do-app.md`.
+2. Ler `docs/curriculo.md`.
+3. Ler o arquivo específico do módulo dentro de `docs/`.
 4. Examinar a implementação existente.
 5. Verificar quais conceitos o estudante já estudou.
 6. Não utilizar como pré-requisito algo que ainda não foi ensinado.
 7. Alterar somente o escopo solicitado.
-8. Testar a implementação.
-9. Não inventar informações técnicas.
-10. Não modificar a ordem oficial das 120 aulas.
-
-O objetivo não é apenas terminar 120 aulas.
-
-O objetivo é fazer com que o estudante desenvolva uma base sólida para compreender programação e continuar aprendendo desenvolvimento de software de maneira progressiva.
+8. Testar o que foi alterado.
+9. Confirmar que funcionalidades existentes continuam funcionando.
+10. Em caso de conflito, preservar o projeto e sinalizar o problema em vez de inventar uma solução.
