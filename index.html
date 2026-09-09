@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Python do Zero — plataforma pessoal de estudos de programação.">
+  <title>Python do Zero</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Navegação principal">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">Py</span>
+        <div><strong>Python do Zero</strong><small>Seu plano de estudos</small></div>
+      </div>
+      <nav id="main-nav"></nav>
+      <div class="sidebar-footer">
+        <span id="sidebar-progress-label">0 de 120 aulas</span>
+        <div class="progress-track" aria-hidden="true"><div id="sidebar-progress-bar" class="progress-bar"></div></div>
+      </div>
+    </aside>
+
+    <main id="conteudo" class="content" tabindex="-1">
+      <div id="app" aria-live="polite"></div>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
