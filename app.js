@@ -120,7 +120,7 @@
     if (id !== 1) { renderCourse(); return; }
     const done = completedSet();
     app.innerHTML = `<div class="page">${pageHeader('Módulo 1', 'Fundamentos de Programação e Python', 'Aulas 1–20 · Semanas 1–4 · nível iniciante absoluto')}
-      <section class="card soft"><p><strong>Objetivo:</strong> construir a base para compreender programação, algoritmos e os primeiros programas em Python.</p><p class="muted">Nesta versão estão implementadas as Aulas 1–5. O restante será acrescentado seguindo o documento oficial do módulo.</p></section>
+      <section class="card soft"><p><strong>Objetivo:</strong> construir a base para compreender programação, algoritmos e os primeiros programas em Python.</p><p class="muted">Nesta versão estão implementadas as Aulas 1–10. O restante será acrescentado seguindo o documento oficial do módulo.</p></section>
       <section style="margin-top:20px"><h2>Aulas disponíveis</h2><div class="lesson-list">
         ${DATA.lessons.map(l => `<a class="lesson-row" href="#/aula/${l.id}"><span class="lesson-number">${l.id}</span><span class="grow"><strong>${l.title}</strong><span class="lesson-meta"><span>${l.time}</span></span></span>${done.has(l.id) ? '<span class="badge done">Concluída</span>' : '<span class="badge">Estudar</span>'}</a>`).join('')}
       </div></section>
@@ -275,8 +275,9 @@
     const done = completedSet();
     const tasks = taskState();
     const doneTasks = DATA.lessons.filter(l => tasks[l.id]).length;
+    const available = DATA.lessons.length;
     app.innerHTML = `<div class="page">${pageHeader('Progresso', 'Acompanhe sua evolução', 'O progresso aumenta somente quando você marca explicitamente uma aula como concluída.')}
-      <div class="grid three"><section class="card"><div class="eyebrow">Curso</div><div class="stat">${progressPercent()}%</div><p class="muted">${done.size}/120 aulas</p></section><section class="card"><div class="eyebrow">Módulo 1 disponível</div><div class="stat">${DATA.lessons.filter(l => done.has(l.id)).length}/5</div><p class="muted">aulas implementadas concluídas</p></section><section class="card"><div class="eyebrow">Tarefas</div><div class="stat">${doneTasks}/5</div><p class="muted">tarefas concluídas</p></section></div>
+      <div class="grid three"><section class="card"><div class="eyebrow">Curso</div><div class="stat">${progressPercent()}%</div><p class="muted">${done.size}/120 aulas</p></section><section class="card"><div class="eyebrow">Módulo 1 disponível</div><div class="stat">${DATA.lessons.filter(l => done.has(l.id)).length}/${available}</div><p class="muted">aulas implementadas concluídas</p></section><section class="card"><div class="eyebrow">Tarefas</div><div class="stat">${doneTasks}/${available}</div><p class="muted">tarefas concluídas</p></section></div>
       <section class="card" style="margin-top:18px"><h2>Progresso geral</h2><div class="progress-track" style="background:#dbe4ed;height:14px"><div class="progress-bar" style="width:${progressPercent()}%"></div></div><p class="muted">Fórmula: aulas concluídas ÷ 120 × 100.</p></section>
       <section style="margin-top:24px"><h2>Aulas disponíveis</h2><div class="lesson-list">${DATA.lessons.map(l => `<a class="lesson-row" href="#/aula/${l.id}"><span class="lesson-number">${l.id}</span><span class="grow"><strong>${l.title}</strong></span>${done.has(l.id) ? '<span class="badge done">Concluída</span>' : '<span class="badge">Pendente</span>'}</a>`).join('')}</div></section>
     </div>`;
