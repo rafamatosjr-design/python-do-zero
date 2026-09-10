@@ -46,6 +46,15 @@ async function go(page, hash, expectedTitle) {
 
     await go(page, '#/aula/1', 'O que é programação?');
     assert(await page.locator('#complete-lesson').count() === 1, 'Controles da Aula 1 não foram carregados.');
+    await page.waitForSelector('.study-notes-card');
+    assert(await page.locator('.lesson-visual-map').count() === 1, 'Mapa visual da aula não foi carregado.');
+    assert(await page.locator('.study-notes-card').count() === 1, 'Área de notas durante a aula não foi carregada.');
+
+    console.log('PASSO: editar nota da aula');
+    const lessonNote = page.locator('#lesson-notes-1');
+    await lessonNote.fill('Minha anotação de teste');
+    await page.waitForTimeout(450);
+    assert((await page.evaluate(() => JSON.parse(localStorage.getItem('pdz.lessonNotes') || '{}')['1'])) === 'Minha anotação de teste', 'Nota da aula não foi salva automaticamente.');
 
     console.log('PASSO: revelar dica');
     const hint = page.locator('.reveal').first();
@@ -63,6 +72,10 @@ async function go(page, hash, expectedTitle) {
     await page.waitForFunction(() => document.querySelector('.task-toggle')?.textContent.includes('Tarefa concluída'), null, { timeout: 8000 });
     assert((await page.locator('.task-toggle').innerText()).includes('Tarefa concluída'), 'Estado da tarefa não atualizou na aula.');
 
+    await go(page, '#/aula/3', 'Preparando o Python');
+    await page.waitForSelector('.setup-guide');
+    assert(await page.locator('.setup-guide').count() === 1, 'Guia de instalação da Aula 3 não foi carregado.');
+
     await go(page, '#/tarefas', 'Pratique o que estudou');
     assert(await page.locator('[data-task="1"]').isChecked(), 'Tarefa concluída não persistiu na página Tarefas.');
 
@@ -74,7 +87,10 @@ async function go(page, hash, expectedTitle) {
     await page.locator('#vault-name').fill('Meu Vault');
     await page.locator('#save-vault').click();
     assert(await page.evaluate(() => localStorage.getItem('pdz.obsidianVault')) === 'Meu Vault', 'Nome do Vault não foi salvo localmente.');
-    assert((await page.locator('#obsidian-preview').innerText()).includes('# Aula 02'), 'Prévia do Obsidian não acompanha a aula atual/recomendada.');
+    await page.waitForSelector('#obsidian-editor');
+    assert((await page.locator('#obsidian-editor').inputValue()).includes('# Aula 02'), 'Editor do Obsidian não acompanha a aula atual/recomendada.');
+    await page.locator('#obsidian-editor').fill('Nota editada no Obsidian');
+    assert(await page.locator('#obsidian-editor').inputValue() === 'Nota editada no Obsidian', 'Editor do Obsidian não está editável.');
 
     console.log('PASSO: viewport móvel');
     await page.setViewportSize({ width: 390, height: 844 });
