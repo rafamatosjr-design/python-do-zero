@@ -28,3 +28,25 @@ jobs:
 
       - name: Executar smoke test estático
         run: node scripts/smoke-static.js
+
+      - name: Instalar Playwright
+        run: npm install --no-save playwright@1.55.0
+
+      - name: Instalar Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Iniciar servidor local
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/python-do-zero-http.log 2>&1 &
+          echo $! > /tmp/python-do-zero-http.pid
+          for i in {1..20}; do
+            if curl --fail --silent http://127.0.0.1:4173/ > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/python-do-zero-http.log
+          exit 1
+
+      - name: Executar smoke test no navegador
+        run: node scripts/smoke-browser.js

@@ -173,6 +173,7 @@
       const set = completedSet();
       set.has(id) ? set.delete(id) : set.add(id);
       saveCompleted(set);
+      updateGlobalProgress();
       renderLesson(id);
       showToast(set.has(id) ? 'Aula concluída.' : 'Conclusão desfeita.');
     });
