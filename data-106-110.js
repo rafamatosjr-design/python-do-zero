@@ -1,5 +1,4 @@
-window.PDZ_LESSONS = window.PDZ_LESSONS || [];
-window.PDZ_LESSONS.push(
+window.PDZ_DATA.lessons.push(
 {
  id:106,module:10,title:'Domínios, registradores, TLD e subdomínios',time:'55 min',
  learn:['Entender o que é um nome de domínio','Diferenciar domínio, TLD e subdomínio','Entender o papel de um registrador'],
