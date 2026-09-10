@@ -19,3 +19,12 @@ jobs:
 
       - name: Validar dados das aulas
         run: node scripts/validate-data.js
+
+      - name: Conferir sintaxe JavaScript
+        run: |
+          for arquivo in *.js scripts/*.js; do
+            node --check "$arquivo"
+          done
+
+      - name: Executar smoke test estático
+        run: node scripts/smoke-static.js
