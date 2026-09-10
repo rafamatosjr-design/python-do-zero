@@ -7,13 +7,16 @@ function assert(condition, message) {
 }
 
 async function openApp(page) {
+  console.log('PASSO: abrir início');
   await page.goto(`${BASE}/#/inicio`, { waitUntil: 'networkidle' });
   await page.waitForSelector('h1');
 }
 
 async function go(page, hash, expectedTitle) {
+  console.log(`PASSO: navegar para ${hash}`);
   await page.evaluate(nextHash => { window.location.hash = nextHash; }, hash);
-  await page.waitForFunction(title => document.querySelector('h1')?.textContent?.includes(title), expectedTitle);
+  await page.waitForFunction(title => document.querySelector('h1')?.textContent?.includes(title), expectedTitle, { timeout: 8000 });
+  console.log(`OK: ${hash}`);
 }
 
 (async () => {
@@ -44,17 +47,20 @@ async function go(page, hash, expectedTitle) {
     await go(page, '#/aula/1', 'O que é programação?');
     assert(await page.locator('#complete-lesson').count() === 1, 'Controles da Aula 1 não foram carregados.');
 
+    console.log('PASSO: revelar dica');
     const hint = page.locator('.reveal').first();
     await hint.click();
     assert(await page.locator('#hint1-1').evaluate(el => el.classList.contains('show')), 'A primeira dica não foi revelada.');
     assert(await hint.getAttribute('aria-expanded') === 'true', 'aria-expanded da dica não foi atualizado.');
 
+    console.log('PASSO: concluir aula');
     await page.locator('#complete-lesson').click();
-    await page.waitForFunction(() => document.querySelector('#sidebar-progress-label')?.textContent === '1 de 120 aulas');
+    await page.waitForFunction(() => document.querySelector('#sidebar-progress-label')?.textContent === '1 de 120 aulas', null, { timeout: 8000 });
     assert((await page.locator('#complete-lesson').innerText()).includes('Aula concluída'), 'Conclusão da aula não persistiu na interface.');
 
+    console.log('PASSO: concluir tarefa');
     await page.locator('.task-toggle').click();
-    await page.waitForFunction(() => document.querySelector('.task-toggle')?.textContent.includes('Tarefa concluída'));
+    await page.waitForFunction(() => document.querySelector('.task-toggle')?.textContent.includes('Tarefa concluída'), null, { timeout: 8000 });
     assert((await page.locator('.task-toggle').innerText()).includes('Tarefa concluída'), 'Estado da tarefa não atualizou na aula.');
 
     await go(page, '#/tarefas', 'Pratique o que estudou');
@@ -70,6 +76,7 @@ async function go(page, hash, expectedTitle) {
     assert(await page.evaluate(() => localStorage.getItem('pdz.obsidianVault')) === 'Meu Vault', 'Nome do Vault não foi salvo localmente.');
     assert((await page.locator('#obsidian-preview').innerText()).includes('# Aula 02'), 'Prévia do Obsidian não acompanha a aula atual/recomendada.');
 
+    console.log('PASSO: viewport móvel');
     await page.setViewportSize({ width: 390, height: 844 });
     await go(page, '#/inicio', 'Continue de onde parou');
     assert(await page.locator('.sidebar').isVisible(), 'Navegação principal não está disponível em viewport móvel.');
