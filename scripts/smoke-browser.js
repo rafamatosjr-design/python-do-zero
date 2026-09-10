@@ -80,7 +80,20 @@ async function go(page, hash, expectedTitle) {
     await page.setViewportSize({ width: 390, height: 844 });
     await go(page, '#/inicio', 'Continue de onde parou');
     assert(await page.locator('.sidebar').isVisible(), 'Navegação principal não está disponível em viewport móvel.');
-    assert((await page.locator('body').evaluate(el => el.scrollWidth)) <= 390, 'Há rolagem horizontal inesperada no viewport móvel.');
+    const mobile = await page.evaluate(() => ({
+      viewport: document.documentElement.clientWidth,
+      bodyScrollWidth: document.body.scrollWidth,
+      htmlScrollWidth: document.documentElement.scrollWidth,
+      offenders: [...document.querySelectorAll('*')]
+        .map(el => {
+          const r = el.getBoundingClientRect();
+          return { tag: el.tagName, cls: el.className || '', left: Math.round(r.left), right: Math.round(r.right), width: Math.round(r.width), scrollWidth: el.scrollWidth };
+        })
+        .filter(x => x.right > document.documentElement.clientWidth + 1 || x.left < -1)
+        .slice(0, 12)
+    }));
+    console.log(`MOBILE: ${JSON.stringify(mobile)}`);
+    assert(mobile.bodyScrollWidth <= mobile.viewport, `Há rolagem horizontal inesperada no viewport móvel (${mobile.bodyScrollWidth}px > ${mobile.viewport}px).`);
 
     if (errors.length) throw new Error(`Erros do navegador:\n${errors.join('\n')}`);
     console.log('✅ Smoke test de navegador concluído com sucesso.');
