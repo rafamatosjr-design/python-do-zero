@@ -88,7 +88,7 @@ async function go(page, hash, expectedTitle) {
     await page.locator('#save-vault').click();
     assert(await page.evaluate(() => localStorage.getItem('pdz.obsidianVault')) === 'Meu Vault', 'Nome do Vault não foi salvo localmente.');
     await page.waitForSelector('#obsidian-editor');
-    assert((await page.locator('#obsidian-editor').inputValue()).includes('# Aula 02'), 'Editor do Obsidian não acompanha a aula atual/recomendada.');
+    assert((await page.locator('#obsidian-editor').inputValue()).includes('# Aula 03'), 'Editor do Obsidian não acompanha a última aula em estudo.');
     await page.locator('#obsidian-editor').fill('Nota editada no Obsidian');
     assert(await page.locator('#obsidian-editor').inputValue() === 'Nota editada no Obsidian', 'Editor do Obsidian não está editável.');
 
