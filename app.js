@@ -11,6 +11,7 @@
   const navItems = [
     ['inicio','⌂','Início'],
     ['curso','▤','Curso'],
+    ['terminal','⌘','Terminal'],
     ['tarefas','✓','Tarefas'],
     ['videos','▶','Vídeos'],
     ['obsidian','◇','Obsidian'],
@@ -251,6 +252,7 @@
     const pages = {
       inicio: renderHome,
       curso: renderCourse,
+      terminal: () => window.renderTerminalPractice(),
       tarefas: renderTasks,
       videos: renderVideos,
       obsidian: renderObsidian,
