@@ -40,6 +40,12 @@
     document.querySelector('#run-code').onclick=()=>{const code=ta.value; let result=[]; const prints=[...code.matchAll(/print\((?:f)?["']([^"']*)["']\)/g)]; if(code.includes('input(')) result.push('Entrada simulada: Júlia'); prints.forEach(m=>result.push(m[1].replace('{nome}','Júlia'))); if(!result.length) result.push('Código recebido. Este laboratório libera mais testes conforme as lições.'); state.xp+=2;save();out.textContent='$ python aula.py\n'+result.join('\n')+'\n\n+2 XP por praticar';};
   }
   
+  const generatedLessons=(window.DEVQUEST_TOPICS||[]).map((x,i)=>({id:i+1,title:x[0],icon:i<30?'🐍':i<50?'☕':i<54?'🌿':i<63?'🌐':i<69?'⚛️':i<77?'🔌':i<82?'🗄️':i<84?'🧩':i<86?'🌐':i<88?'🐧':i<90?'🚀':'🛡️',steps:[
+    {t:'learn',title:x[0],body:x[1]},
+    {t:'choice',q:x[2],a:x[3],c:x[4],why:x[1]},
+    {t:'fill',q:'Complete uma palavra ou comando importante desta lição:',before:'Resposta: ____',answer:(x[3][x[4]].match(/[A-Za-z_]+/)||[x[3][x[4]]])[0],hint:'Revise a resposta correta da etapa anterior.'},
+    {t:'code',q:'Registre no editor um exemplo ou anotação prática sobre '+x[0]+'.',test:'',contains:''}
+  ]}));
   const microLessons=[
     {id:1,title:'Pense como um programador',icon:'🧠',steps:[
       {t:'learn',title:'O que é lógica?',body:'Programar começa antes do código. Lógica é organizar passos claros para transformar uma entrada em um resultado.'},
@@ -72,6 +78,7 @@
       {t:'code',q:'Crie um for usando range().',test:'for',contains:'range'}
     ]}
   ];
+  if(generatedLessons.length) { microLessons.splice(0,microLessons.length,...generatedLessons); }
   function lessonProgress(){try{return JSON.parse(localStorage.getItem('devquest.micro.done')||'[]')}catch{return []}}
   function markMicroDone(id){const d=new Set(lessonProgress());d.add(id);localStorage.setItem('devquest.micro.done',JSON.stringify([...d]));state.xp+=30;state.level=1+Math.floor(state.xp/100);save();}
   function renderLearn(){
@@ -94,7 +101,7 @@
     document.querySelectorAll('.micro-choice').forEach(b=>b.onclick=()=>{const ok=Number(b.dataset.i)===s.c;feedback(ok,ok?s.why:'Observe a explicação e tente outra opção.');});
     const cf=document.querySelector('.check-fill');if(cf)cf.onclick=()=>feedback(document.querySelector('#fill-answer').value.trim()===s.answer,s.hint);
     let selected=[];document.querySelectorAll('.order-item').forEach(b=>b.onclick=()=>{if(b.disabled)return;b.disabled=true;selected.push(b.dataset.text);document.querySelector('#order-selected').innerHTML=selected.map((x,i)=>'<span>'+(i+1)+'. '+esc(x)+'</span>').join('');});const co=document.querySelector('.check-order');if(co)co.onclick=()=>feedback(JSON.stringify(selected)===JSON.stringify(s.answer),'Revise a sequência: entrada, processamento e saída.');
-    const cc=document.querySelector('.check-code');if(cc)cc.onclick=()=>{const v=document.querySelector('#micro-code').value;feedback(v.includes(s.test)&&v.includes(s.contains),'Seu código precisa usar '+s.test+' e atender ao pedido da atividade.');};
+    const cc=document.querySelector('.check-code');if(cc)cc.onclick=()=>{const v=document.querySelector('#micro-code').value;feedback(s.test==='' ? v.trim().length>=3 : (v.includes(s.test)&&v.includes(s.contains)),s.test===''?'Escreva um pequeno exemplo ou anotação antes de executar.':'Seu código precisa usar '+s.test+' e atender ao pedido da atividade.');};
   }
 
   function renderTutor(){
