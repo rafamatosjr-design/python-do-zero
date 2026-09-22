@@ -80,10 +80,10 @@
     const base=[{t:'learn',title,body:explanation},{t:'choice',q:x[2],a:choices,c:correct,why:explanation}];
 
     const qsets=[
-      {q:'Você precisa usar '+title+' em um exercício novo. Antes de escrever a solução, o que deve identificar?',a:['O objetivo, os dados disponíveis e o resultado esperado','A maior quantidade possível de comandos','Um código pronto para copiar'],c:0,why:'Entender entradas, objetivo e saída evita programar sem direção.'},
-      {q:'Uma solução com '+title+' funcionou uma vez. Como verificar se ela realmente está correta?',a:['Testar outros dados e comparar com resultados esperados','Executar apenas o mesmo caso novamente','Aumentar o tamanho do código'],c:0,why:'Casos diferentes revelam comportamentos que um único teste não mostra.'},
-      {q:'Ao revisar um código que usa '+title+', qual sinal indica melhor que você compreendeu a solução?',a:['Você consegue explicar o papel de cada parte e prever o resultado','Você reconhece apenas o nome do comando','Você consegue copiar o código rapidamente'],c:0,why:'Explicar e prever o comportamento exige compreensão da lógica.'},
-      {q:'Se a solução de '+title+' produz um resultado inesperado, qual investigação é mais útil?',a:['Localizar em qual etapa o valor deixa de ser o esperado','Trocar vários comandos ao mesmo tempo','Apagar tudo sem testar'],c:0,why:'Depurar é isolar a etapa em que o comportamento se desvia do esperado.'}
+      {t:'choice',q:'Você precisa usar '+title+' em um exercício novo. Antes de escrever a solução, o que deve identificar?',a:['O objetivo, os dados disponíveis e o resultado esperado','A maior quantidade possível de comandos','Um código pronto para copiar'],c:0,why:'Entender entradas, objetivo e saída evita programar sem direção.'},
+      {t:'choice',q:'Uma solução com '+title+' funcionou uma vez. Como verificar se ela realmente está correta?',a:['Testar outros dados e comparar com resultados esperados','Executar apenas o mesmo caso novamente','Aumentar o tamanho do código'],c:0,why:'Casos diferentes revelam comportamentos que um único teste não mostra.'},
+      {t:'choice',q:'Ao revisar um código que usa '+title+', qual sinal indica melhor que você compreendeu a solução?',a:['Você consegue explicar o papel de cada parte e prever o resultado','Você reconhece apenas o nome do comando','Você consegue copiar o código rapidamente'],c:0,why:'Explicar e prever o comportamento exige compreensão da lógica.'},
+      {t:'choice',q:'Se a solução de '+title+' produz um resultado inesperado, qual investigação é mais útil?',a:['Localizar em qual etapa o valor deixa de ser o esperado','Trocar vários comandos ao mesmo tempo','Apagar tudo sem testar'],c:0,why:'Depurar é isolar a etapa em que o comportamento se desvia do esperado.'}
     ];
     base.push(qsets[i%4]);
     base.push(qsets[(i+1)%4]);
