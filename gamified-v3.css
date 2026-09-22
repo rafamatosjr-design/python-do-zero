@@ -26,3 +26,13 @@
 .next-mission{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:10px;padding:16px;border-radius:16px;background:var(--surface-2,#f6f8fb)}
 .next-mission div{display:grid;gap:3px}.next-mission small{font-weight:900;color:var(--accent)}.next-mission span{color:var(--muted)}
 @media(max-width:640px){.trail-progress{grid-template-columns:1fr auto}.trail-progress strong{grid-column:1/-1}.mission-dot{width:44px;height:44px}.next-mission{align-items:stretch;flex-direction:column}.next-mission .btn{text-align:center}.path-zone{padding:16px}.learning-loop b{display:none}}
+
+
+.lesson-content{margin:18px auto 14px;max-width:920px}
+.lesson-content h3{margin:4px 0 8px}
+.lesson-content>p{margin:0 0 14px}
+.lesson-content-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.lesson-content-grid div{padding:12px;border:1px solid rgba(127,127,127,.25);border-radius:12px;display:flex;flex-direction:column;gap:5px}
+.lesson-content-grid span{font-size:.9rem;opacity:.8}
+@media(max-width:760px){.lesson-content-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.lesson-content-grid{grid-template-columns:1fr}}
