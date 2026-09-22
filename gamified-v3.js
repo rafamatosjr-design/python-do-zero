@@ -1,7 +1,7 @@
 (() => {
   'use strict';
   const DATA = window.PDZ_DATA;
-  if (!DATA) return;
+  if (!DATA) { console.error('Gamificação: PDZ_DATA não carregado.'); return; }
   const KEY = 'devquest.game.v1';
   const state = Object.assign({xp:0, hearts:5, streak:1, level:1, correct:0, answered:0}, JSON.parse(localStorage.getItem(KEY)||'{}'));
   const save=()=>localStorage.setItem(KEY,JSON.stringify(state));
@@ -23,7 +23,7 @@
     const extra=[['trilha','🗺️','Trilha'],['aprender','📚','Aprender'],['praticar','🎯','Praticar'],['laboratorio','💻','Laboratório'],['tutor','🤖','Tutor IA'],['desafios','🏆','Desafios']];
     extra.reverse().forEach(([p,i,l])=>{ if(!nav.querySelector('[data-page="'+p+'"]')) nav.insertAdjacentHTML('afterbegin','<a class="nav-link" data-page="'+p+'" href="#/'+p+'"><span>'+i+'</span><span>'+l+'</span></a>'); });
   }
-  function renderShell(content){ document.querySelector('#app').innerHTML='<div class="page gamified">'+gameStats()+content+'</div>'; }
+  function renderShell(content){ const root=document.querySelector('#app'); if(!root) return; root.innerHTML='<div class="page gamified">'+gameStats()+content+'</div>'; }
   function renderTrail(){
     const modules=DATA.modules;
     renderShell('<header class="hero-game"><div><div class="eyebrow">Sua jornada</div><h1>Aprenda programação jogando</h1><p>Microlições, desafios e prática no laboratório. Comece pela lógica e desbloqueie cada etapa.</p></div><div class="level-orb">Lv.<strong>'+state.level+'</strong></div></header><section class="quest-path">'+modules.map((m,i)=>'<a class="quest-node '+(i===0?'active':'')+'" href="#/modulo/'+m.id+'"><span class="node-icon">'+(i===0?'🧠':i===1?'🐍':i===2?'☕':'⚡')+'</span><span><small>Módulo '+m.id+'</small><strong>'+esc(m.title)+'</strong><em>Aulas '+m.lessons+'</em></span><b>→</b></a>').join('')+'</section>');
@@ -118,5 +118,6 @@
   }
   function route(){const parts=(location.hash.replace(/^#\/?/,'')||'inicio').split('/');const p=parts[0]; injectNav(); if(p==='trilha'){renderTrail();return true} if(p==='aprender'){renderLearn();return true} if(p==='micro'){renderMicro(Number(parts[1]),Number(parts[2])||0);return true} if(p==='praticar'){renderPractice();return true} if(p==='laboratorio'){renderLab();return true} if(p==='tutor'){renderTutor();return true} if(p==='desafios'){renderChallenges();return true} return false}
   window.addEventListener('hashchange',()=>setTimeout(route,0));
-  setTimeout(()=>{injectNav(); if(location.hash==='#/inicio'||!location.hash) location.hash='#/trilha'; else route();},0);
+  function boot(){ injectNav(); if(location.hash==='#/inicio'||!location.hash){ location.hash='#/trilha'; setTimeout(route,0); } else route(); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
 })();
