@@ -2,10 +2,10 @@
   'use strict';
   const DATA = window.PDZ_DATA;
   if (!DATA) { console.error('Gamificação: PDZ_DATA não carregado.'); return; }
-  const KEY = 'devquest.game.v2';
+  const KEY = 'devquest.game.v3';
   const state = Object.assign({xp:0, hearts:5, streak:1, level:1, correct:0, answered:0}, JSON.parse(localStorage.getItem(KEY)||'{}'));
   const save=()=>localStorage.setItem(KEY,JSON.stringify(state));
-  const MICRO_DONE_KEY='devquest.micro.done.v2';
+  const MICRO_DONE_KEY='devquest.micro.done.v3';
   const microDoneSet=()=>new Set(JSON.parse(localStorage.getItem(MICRO_DONE_KEY)||'[]'));
   const topicCount=()=>microLessons.length;
   const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
@@ -18,7 +18,7 @@
   ];
   function gameStats(){
     const total=DATA.lessons.length||140;
-    const done=new Set(JSON.parse(localStorage.getItem('pdz.completed')||'[]')).size;
+    const done=new Set(JSON.parse(localStorage.getItem('pdz.completed.v3')||'[]')).size;
     return '<div class="game-stats"><span>🔥 '+state.streak+' dias</span><span>💎 '+state.xp+' XP</span><span>❤️ '+state.hearts+'</span><span>⭐ Nível '+state.level+'</span><span>'+done+'/'+total+' aulas</span></div>';
   }
   function injectNav(){
@@ -50,10 +50,28 @@
     document.querySelectorAll('.quiz-option').forEach(b=>b.onclick=()=>{const ok=Number(b.dataset.answer)===q.c; state.answered++; if(ok){state.correct++;state.xp+=10;state.level=1+Math.floor(state.xp/100);b.classList.add('correct');}else{state.hearts=Math.max(0,state.hearts-1);b.classList.add('wrong');} save(); document.querySelectorAll('.quiz-option').forEach(x=>x.disabled=true); document.querySelector('#quiz-feedback').innerHTML='<div class="feedback '+(ok?'good':'bad')+'"><strong>'+(ok?'✓ Correto! +10 XP':'Ainda não. Tente aprender com o erro.')+'</strong><p>'+esc(q.e)+'</p><a class="btn primary" href="#/praticar" onclick="setTimeout(()=>location.reload(),0)">Próxima questão</a></div>';});
   }
   function renderLab(){
-    renderShell('<header class="page-header"><div><div class="eyebrow">Laboratório</div><h1>VS Code Simulator</h1><p class="muted">Escreva, execute, erre, corrija e teste. Aqui a prática vale mais que copiar.</p></div></header><div class="vscode-lab"><div class="vscode-top"><span>● ● ●</span><strong>aula.py — Visual Studio Code</strong></div><div class="vscode-main"><aside><b>EXPLORER</b><span>▾ MEU-PROJETO</span><span>🐍 aula.py</span></aside><div class="editor"><div class="editor-tabs">aula.py ×</div><textarea id="game-code" spellcheck="false">nome = input("Qual é seu nome? ")\nprint(f"Olá, {nome}!")</textarea></div></div><div class="terminal-panel"><div><b>TERMINAL</b> <span>PROBLEMS OUTPUT</span></div><pre id="game-output">$ python aula.py\nPronto para executar seu código.</pre></div><div class="lab-actions"><button id="run-code" class="btn success">▶ Executar</button><button id="reset-code" class="btn ghost">↻ Reiniciar</button><span class="muted">Simulador educativo: exercícios Python seguros no navegador.</span></div></div>');
+    const done=microDoneSet().size;
+    const beginner=done<15, intermediate=done>=15&&done<40;
+    const starter=beginner?'nome = input("Qual é seu nome? ")\\n# COMPLETE A LINHA ABAIXO\\nprint(____________________)':
+      intermediate?'idade = int(input("Digite sua idade: "))\\n# COMPLETE AS DUAS LINHAS\\nif ____________________: \\n    ____________________':
+      '';
+    const task=beginner?'Complete apenas a linha que falta para mostrar uma saudação usando a variável nome.':
+      intermediate?'Complete as duas linhas para verificar se a pessoa tem 18 anos ou mais e mostrar uma mensagem.':
+      'Escreva todo o código sozinho. Crie um programa que receba dados do usuário, tome pelo menos uma decisão e mostre um resultado claro.';
+    renderShell('<header class="page-header"><div><div class="eyebrow">Laboratório</div><h1>VS Code Simulator</h1><p class="muted"><strong>Você escreve o código.</strong> No início, complete 1 ou 2 linhas. Conforme avançar, o editor ficará vazio e você construirá a solução inteira.</p></div></header><section class="card"><h2>🎯 Sua tarefa</h2><p>'+esc(task)+'</p><p class="muted">Progresso usado para definir a dificuldade: '+done+' lições concluídas.</p></section><div class="vscode-lab"><div class="vscode-top"><span>● ● ●</span><strong>aula.py — Visual Studio Code</strong></div><div class="vscode-main"><aside><b>EXPLORER</b><span>▾ MEU-PROJETO</span><span>🐍 aula.py</span></aside><div class="editor"><div class="editor-tabs">aula.py ×</div><textarea id="game-code" spellcheck="false" placeholder="Escreva seu código aqui...">'+esc(starter)+'</textarea></div></div><div class="terminal-panel"><div><b>TERMINAL</b> <span>PROBLEMS OUTPUT</span></div><pre id="game-output">$ python aula.py\\nEscreva sua solução e clique em Executar.</pre></div><div class="lab-actions"><button id="run-code" class="btn success">▶ Executar meu código</button><button id="reset-code" class="btn ghost">↻ Reiniciar exercício</button><span class="muted">O laboratório não preenche a resposta por você.</span></div></div>');
     const ta=document.querySelector('#game-code'), out=document.querySelector('#game-output'), initial=ta.value;
-    document.querySelector('#reset-code').onclick=()=>{ta.value=initial;out.textContent='$ python aula.py\nPronto para executar seu código.'};
-    document.querySelector('#run-code').onclick=()=>{const code=ta.value; let result=[]; const prints=[...code.matchAll(/print\((?:f)?["']([^"']*)["']\)/g)]; if(code.includes('input(')) result.push('Entrada simulada: Júlia'); prints.forEach(m=>result.push(m[1].replace('{nome}','Júlia'))); if(!result.length) result.push('Código recebido. Este laboratório libera mais testes conforme as lições.'); state.xp+=2;save();out.textContent='$ python aula.py\n'+result.join('\n')+'\n\n+2 XP por praticar';};
+    document.querySelector('#reset-code').onclick=()=>{ta.value=initial;out.textContent='$ python aula.py\\nEscreva sua solução e clique em Executar.'};
+    document.querySelector('#run-code').onclick=()=>{
+      const code=ta.value.trim();
+      const incomplete=/_{3,}|COMPLETE/.test(code);
+      if(!code||incomplete){out.textContent='$ python aula.py\\nAinda há uma parte para você completar. Escreva o código antes de executar.';return;}
+      let notes=[];
+      if(!/print\s*\(/.test(code)) notes.push('Dica: sua solução ainda não mostra um resultado com print().');
+      if(!beginner&&!/input\s*\(/.test(code)) notes.push('Dica: tente receber um dado com input().');
+      if(!beginner&&!intermediate&&!/if\s+.+:/.test(code)) notes.push('Dica: o desafio pede pelo menos uma decisão com if.');
+      if(notes.length){out.textContent='$ python aula.py\\n'+notes.join('\\n');return;}
+      state.xp+=2;save();out.textContent='$ python aula.py\\nCódigo enviado para teste. Boa: a solução foi escrita por você.\\n\\n+2 XP por praticar';
+    };
   }
   
   function practicalSteps(x,i){
@@ -61,41 +79,30 @@
     const right=choices[correct], token=(String(right).match(/[A-Za-z_][A-Za-z0-9_.]*/)||[String(right)])[0];
     const base=[{t:'learn',title,body:explanation},{t:'choice',q:x[2],a:choices,c:correct,why:explanation}];
 
-    // Cada missão aprofunda o mesmo tema por ângulos diferentes: decisão,
-    // leitura de código, aplicação, depuração e transferência para outro contexto.
-    const foundations=[
-      {q:'Você terminou uma primeira solução para '+title+'. Qual próximo passo ajuda mais a confirmar que ela funciona em situações diferentes?',a:['Testar com dados diferentes e comparar os resultados esperados','Duplicar o mesmo código várias vezes','Trocar os nomes das variáveis sem testar'],c:0,why:'Testes com entradas diferentes ajudam a verificar o comportamento da solução.'},
-      {q:'Ao explicar sua solução de '+title+' para outra pessoa, o que demonstra melhor compreensão?',a:['Explicar por que cada parte existe e quando usá-la','Recitar o código sem explicar','Dizer apenas que o código funcionou'],c:0,why:'Compreender inclui justificar as escolhas feitas no código.'},
-      {q:'Um código usando '+title+' funciona em um caso, mas falha com outros dados. Qual atitude é mais útil?',a:['Investigar quais entradas causam o problema e revisar a lógica','Adicionar comandos aleatórios','Ignorar os casos que falharam'],c:0,why:'Comparar casos ajuda a localizar a causa do erro.'}
+    const qsets=[
+      {q:'Você precisa usar '+title+' em um exercício novo. Antes de escrever a solução, o que deve identificar?',a:['O objetivo, os dados disponíveis e o resultado esperado','A maior quantidade possível de comandos','Um código pronto para copiar'],c:0,why:'Entender entradas, objetivo e saída evita programar sem direção.'},
+      {q:'Uma solução com '+title+' funcionou uma vez. Como verificar se ela realmente está correta?',a:['Testar outros dados e comparar com resultados esperados','Executar apenas o mesmo caso novamente','Aumentar o tamanho do código'],c:0,why:'Casos diferentes revelam comportamentos que um único teste não mostra.'},
+      {q:'Ao revisar um código que usa '+title+', qual sinal indica melhor que você compreendeu a solução?',a:['Você consegue explicar o papel de cada parte e prever o resultado','Você reconhece apenas o nome do comando','Você consegue copiar o código rapidamente'],c:0,why:'Explicar e prever o comportamento exige compreensão da lógica.'},
+      {q:'Se a solução de '+title+' produz um resultado inesperado, qual investigação é mais útil?',a:['Localizar em qual etapa o valor deixa de ser o esperado','Trocar vários comandos ao mesmo tempo','Apagar tudo sem testar'],c:0,why:'Depurar é isolar a etapa em que o comportamento se desvia do esperado.'}
     ];
-    const intermediate=[
-      {q:'Em um projeto, você encontrou duas soluções para '+title+'. Como escolher entre elas?',a:['Comparar clareza, correção e adequação ao problema','Escolher sempre a que tem mais linhas','Escolher a primeira sem testar'],c:0,why:'Uma boa solução precisa estar correta e ser adequada ao problema.'},
-      {q:'Você precisa modificar uma solução que usa '+title+'. O que reduz a chance de introduzir um erro?',a:['Entender o comportamento atual e testar depois da alteração','Alterar várias partes ao mesmo tempo sem testar','Apagar os testes existentes'],c:0,why:'Mudanças pequenas e verificadas tornam os erros mais fáceis de identificar.'},
-      {q:'Qual evidência é mais forte de que você domina '+title+'?',a:['Conseguir aplicar o conceito em um problema novo','Reconhecer o nome em uma lista','Memorizar um exemplo específico'],c:0,why:'Transferir o conceito para situações novas demonstra compreensão mais profunda.'}
-    ];
-    const advanced=[
-      {q:'Ao usar '+title+' em uma aplicação maior, qual prática facilita manutenção e depuração?',a:['Separar responsabilidades e testar partes menores','Concentrar toda a lógica em um único bloco','Evitar nomes descritivos'],c:0,why:'Partes menores e responsabilidades claras tornam o comportamento mais fácil de compreender e testar.'},
-      {q:'Uma solução com '+title+' produz o resultado certo, mas ficou difícil de entender. O que deve ser melhorado?',a:['Clareza e organização sem alterar o comportamento correto','Quantidade de linhas, aumentando-a','Complexidade, adicionando mais estruturas'],c:0,why:'Código correto também deve ser legível e sustentável.'},
-      {q:'Você precisa reutilizar o conhecimento de '+title+' em outro projeto. Qual abordagem é mais adequada?',a:['Identificar o princípio que se repete e adaptá-lo ao novo contexto','Copiar tudo sem verificar diferenças','Recomeçar sem aproveitar o conceito aprendido'],c:0,why:'A transferência de conhecimento exige reconhecer o princípio e adaptá-lo ao novo problema.'}
-    ];
-
-    const bank=i<20?foundations:(i<60?intermediate:advanced);
-    base.push(bank[i%bank.length]);
+    base.push(qsets[i%4]);
+    base.push(qsets[(i+1)%4]);
 
     if(i<15){
-      if((i+1)%2===0) base.push({t:'fill',q:'Sem olhar as alternativas, escreva o principal comando, operador ou estrutura relacionado a '+title+'.',before:'Resposta: ____',answer:token,hint:'Pense no elemento central apresentado nesta missão.'});
-    } else if(i<40){
-      base.push({t:'fill',q:'Recupere da memória o elemento principal de '+title+' usado nesta missão.',before:'Resposta: ____',answer:token,hint:'Escreva apenas o comando, palavra ou estrutura principal.'});
-      if((i+1)%2===0) base.push({t:'code',q:'Crie um exemplo próprio de '+title+' usando dados diferentes dos exemplos anteriores.',test:'',contains:''});
-    } else {
-      base.push({t:'code',q:'Aplicação prática — '+title+': crie uma solução curta para um caso inventado por você e deixe claro qual resultado espera obter.',test:'',contains:''});
-      if((i+1)%2===0) base.push({t:'code',q:'Depuração — '+title+': escreva um exemplo, altere propositalmente uma parte importante e depois corrija para recuperar o comportamento esperado.',test:'',contains:''});
-      if((i+1)%3===0) base.push({t:'code',q:'Transferência — '+title+': use o mesmo conceito em um contexto diferente do exercício anterior.',test:'',contains:''});
+      base.push({t:'fill',q:'Agora sem alternativas: complete com o principal comando, operador ou estrutura desta lição.',before:'Resposta: ____',answer:token,hint:'Use o conceito central de '+title+'.'});
+      base.push({t:'code',q:'Código guiado — '+title+': escreva somente uma linha curta aplicando o conceito. Não copie uma solução completa.',test:'',contains:''});
+    }else if(i<40){
+      base.push({t:'fill',q:'Recupere da memória o elemento principal usado em '+title+'.',before:'Resposta: ____',answer:token,hint:'Escreva apenas o elemento central.'});
+      base.push({t:'code',q:'Código parcialmente guiado — '+title+': escreva duas ou três linhas para resolver uma situação diferente da pergunta anterior.',test:'',contains:''});
+      base.push({t:'choice',q:'Ao adaptar '+title+' para outro problema, o que deve permanecer?',a:['A lógica necessária ao novo objetivo, não necessariamente o código literal','Todos os nomes e valores do exemplo anterior','Exatamente a mesma quantidade de linhas'],c:0,why:'O conceito é transferido; detalhes do exemplo podem e devem mudar.'});
+    }else{
+      base.push({t:'code',q:'Aplicação — '+title+': escreva sozinho uma pequena solução completa para um caso novo.',test:'',contains:''});
+      base.push({t:'choice',q:'Duas soluções diferentes resolvem corretamente um problema com '+title+'. Qual comparação é mais útil?',a:['Clareza, correção e adequação ao problema','Qual tem mais linhas','Qual foi escrita primeiro'],c:0,why:'Soluções podem ser diferentes e ainda corretas; qualidade depende também de clareza e adequação.'});
+      base.push({t:'code',q:'Depuração — '+title+': crie um exemplo, identifique um possível erro e escreva a versão corrigida.',test:'',contains:''});
+      base.push({t:'code',q:'Transferência — '+title+': aplique o conceito em um contexto diferente do exercício anterior, escrevendo o código sem modelo pronto.',test:'',contains:''});
     }
-
-    if((i+1)%5===0) base.push({t:'choice',q:'Depois destas missões, qual estratégia ajuda mais a consolidar '+title+'?',a:['Resolver um novo problema sem copiar a resposta anterior','Reler somente o título do conteúdo','Memorizar uma única solução'],c:0,why:'Resolver um problema novo exige recuperar e aplicar o conhecimento.'});
-    if((i+1)%5===0) base.push({t:'code',q:'Revisão acumulativa: combine '+title+' com um conceito estudado nas quatro missões anteriores.',test:'',contains:''});
-    if((i+1)%10===0) base.push({t:'code',q:'Desafio do bloco: desenvolva uma solução um pouco maior usando '+title+' e pelo menos dois conceitos anteriores. Teste com mais de um conjunto de dados.',test:'',contains:''});
+    if((i+1)%5===0) base.push({t:'code',q:'Revisão acumulativa: combine '+title+' com um conceito das lições anteriores em uma solução escrita por você.',test:'',contains:''});
+    if((i+1)%10===0) base.push({t:'code',q:'Desafio do bloco: escreva uma solução completa usando '+title+' e pelo menos dois conceitos anteriores. Teste mentalmente com dois conjuntos de dados.',test:'',contains:''});
     return base;
   }
 
