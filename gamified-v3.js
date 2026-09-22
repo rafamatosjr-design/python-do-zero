@@ -52,25 +52,25 @@
   function renderLab(){
     const done=microDoneSet().size;
     const beginner=done<15, intermediate=done>=15&&done<40;
-    const starter=beginner?'nome = input("Qual é seu nome? ")\\n# COMPLETE A LINHA ABAIXO\\nprint(____________________)':
-      intermediate?'idade = int(input("Digite sua idade: "))\\n# COMPLETE AS DUAS LINHAS\\nif ____________________: \\n    ____________________':
+    const starter=beginner?'nome = input("Qual é seu nome? ")\n# COMPLETE A LINHA ABAIXO\nprint(____________________)':
+      intermediate?'idade = int(input("Digite sua idade: "))\n# COMPLETE AS DUAS LINHAS\nif ____________________:\n    ____________________':
       '';
     const task=beginner?'Complete apenas a linha que falta para mostrar uma saudação usando a variável nome.':
       intermediate?'Complete as duas linhas para verificar se a pessoa tem 18 anos ou mais e mostrar uma mensagem.':
       'Escreva todo o código sozinho. Crie um programa que receba dados do usuário, tome pelo menos uma decisão e mostre um resultado claro.';
     renderShell('<header class="page-header"><div><div class="eyebrow">Laboratório</div><h1>VS Code Simulator</h1><p class="muted"><strong>Você escreve o código.</strong> No início, complete 1 ou 2 linhas. Conforme avançar, o editor ficará vazio e você construirá a solução inteira.</p></div></header><section class="card"><h2>🎯 Sua tarefa</h2><p>'+esc(task)+'</p><p class="muted">Progresso usado para definir a dificuldade: '+done+' lições concluídas.</p></section><div class="vscode-lab"><div class="vscode-top"><span>● ● ●</span><strong>aula.py — Visual Studio Code</strong></div><div class="vscode-main"><aside><b>EXPLORER</b><span>▾ MEU-PROJETO</span><span>🐍 aula.py</span></aside><div class="editor"><div class="editor-tabs">aula.py ×</div><textarea id="game-code" spellcheck="false" placeholder="Escreva seu código aqui...">'+esc(starter)+'</textarea></div></div><div class="terminal-panel"><div><b>TERMINAL</b> <span>PROBLEMS OUTPUT</span></div><pre id="game-output">$ python aula.py\\nEscreva sua solução e clique em Executar.</pre></div><div class="lab-actions"><button id="run-code" class="btn success">▶ Executar meu código</button><button id="reset-code" class="btn ghost">↻ Reiniciar exercício</button><span class="muted">O laboratório não preenche a resposta por você.</span></div></div>');
     const ta=document.querySelector('#game-code'), out=document.querySelector('#game-output'), initial=ta.value;
-    document.querySelector('#reset-code').onclick=()=>{ta.value=initial;out.textContent='$ python aula.py\\nEscreva sua solução e clique em Executar.'};
+    document.querySelector('#reset-code').onclick=()=>{ta.value=initial;out.dataset.status='idle';out.textContent='$ python aula.py\nEscreva sua solução e clique em Executar.'};
     document.querySelector('#run-code').onclick=()=>{
       const code=ta.value.trim();
       const incomplete=/_{3,}|COMPLETE/.test(code);
-      if(!code||incomplete){out.textContent='$ python aula.py\\nAinda há uma parte para você completar. Escreva o código antes de executar.';return;}
+      if(!code||incomplete){out.dataset.status='incomplete';out.textContent='$ python aula.py\nAinda há uma parte para você completar. Escreva o código antes de executar.';return;}
       let notes=[];
       if(!/print\s*\(/.test(code)) notes.push('Dica: sua solução ainda não mostra um resultado com print().');
       if(!beginner&&!/input\s*\(/.test(code)) notes.push('Dica: tente receber um dado com input().');
       if(!beginner&&!intermediate&&!/if\s+.+:/.test(code)) notes.push('Dica: o desafio pede pelo menos uma decisão com if.');
-      if(notes.length){out.textContent='$ python aula.py\\n'+notes.join('\\n');return;}
-      state.xp+=2;save();out.textContent='$ python aula.py\\nCódigo enviado para teste. Boa: a solução foi escrita por você.\\n\\n+2 XP por praticar';
+      if(notes.length){out.dataset.status='needs-work';out.textContent='$ python aula.py\n'+notes.join('\n');return;}
+      state.xp+=2;save();out.dataset.status='success';out.textContent='$ python aula.py\nCódigo aceito para esta etapa. Boa: a solução foi escrita por você.\n\n+2 XP por praticar';
     };
   }
   
