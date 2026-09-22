@@ -94,4 +94,5 @@ const topics=[
 ['Projeto final','Integre front-end, API, banco, testes e deploy.','Primeiro passo de um projeto final?',['definir requisitos','programar sem plano','ignorar segurança'],0]
 ];
 window.DEVQUEST_TOPICS=topics;
+if (typeof globalThis !== 'undefined') globalThis.DEVQUEST_TOPICS=topics;
 })();
