@@ -106,7 +106,7 @@
     return base;
   }
 
-  const generatedLessons=(window.DEVQUEST_TOPICS||[]).map((x,i)=>({id:i+1,title:x[0],icon:i<30?'🐍':i<50?'☕':i<54?'🌿':i<63?'🌐':i<69?'⚛️':i<77?'🔌':i<82?'🗄️':i<84?'🧩':i<86?'🌐':i<88?'🐧':i<90?'🚀':'🛡️',steps:practicalSteps(x,i)}));
+  const generatedLessons=(window.DEVQUEST_TOPICS||[]).map((x,i)=>({id:i+1,title:x[0],icon:i<30?'🐍':i<50?'☕':i<54?'🌿':i<63?'🌐':i<69?'⚛️':i<77?'🔌':i<82?'🗄️':i<84?'🧩':i<86?'🌐':i<88?'🐧':i<90?'🚀':'🛡️',summary:x[1],steps:practicalSteps(x,i)}));
   const microLessons=[
     {id:1,title:'Pense como um programador',icon:'🧠',steps:[
       {t:'learn',title:'O que é lógica?',body:'Programar começa antes do código. Lógica é organizar passos claros para transformar uma entrada em um resultado.'},
@@ -148,15 +148,17 @@
   }
   function renderMicro(id,stepIndex=0){
     const lesson=microLessons.find(x=>x.id===id); if(!lesson){renderLearn();return}
-    const s=lesson.steps[stepIndex]||lesson.steps[0], pct=Math.round(((stepIndex+1)/lesson.steps.length)*100);
+    const safeIndex=Math.max(0,Math.min(Number(stepIndex)||0,lesson.steps.length-1));
+    const s=lesson.steps[safeIndex], pct=Math.round(((safeIndex+1)/lesson.steps.length)*100);
+    const study='<aside class="lesson-content card"><div class="eyebrow">Conteúdo da lição</div><h3>'+esc(lesson.title)+'</h3><p>'+esc(lesson.summary||lesson.steps[0]?.body||'Aprenda o conceito e aplique nas atividades.')+'</p><div class="lesson-content-grid"><div><strong>1. Entenda</strong><span>Leia o conceito e identifique para que ele serve.</span></div><div><strong>2. Observe</strong><span>Veja o problema e pense no resultado antes de responder.</span></div><div><strong>3. Aplique</strong><span>Resolva sem copiar e explique mentalmente sua escolha.</span></div><div><strong>4. Pratique</strong><span>Quando chegar ao código, escreva você mesmo.</span></div></div></aside>';
     let body='';
     if(s.t==='learn') body='<div class="micro-explain"><span class="big-icon">'+lesson.icon+'</span><h2>'+esc(s.title)+'</h2><p>'+esc(s.body)+'</p><button class="btn primary micro-next">Entendi, continuar</button></div>';
     if(s.t==='choice') body='<h2>'+esc(s.q)+'</h2><div class="quiz-options">'+s.a.map((a,i)=>'<button class="quiz-option micro-choice" data-i="'+i+'"><b>'+String.fromCharCode(65+i)+'</b>'+esc(a)+'</button>').join('')+'</div><div id="micro-feedback"></div>';
     if(s.t==='fill') body='<h2>'+esc(s.q)+'</h2><pre class="code-task">'+esc(s.before)+'</pre><input id="fill-answer" class="code-input" autocomplete="off" placeholder="Digite a parte que falta"><p class="muted">💡 '+esc(s.hint)+'</p><button class="btn primary check-fill">Verificar</button><div id="micro-feedback"></div>';
     if(s.t==='order') body='<h2>'+esc(s.q)+'</h2><p class="muted">Clique nos passos na ordem correta. Se mudar de ideia, clique em um item escolhido para devolvê-lo à lista.</p><div class="order-bank">'+s.items.map((x,i)=>'<button class="order-item" data-order-id="'+i+'">'+esc(x)+'</button>').join('')+'</div><div id="order-selected" class="order-selected"></div><div class="actions"><button class="btn secondary reset-order">↻ Recomeçar</button><button class="btn primary check-order">Verificar ordem</button></div><div id="micro-feedback"></div>';
     if(s.t==='code') body='<h2>'+esc(s.q)+'</h2><div class="mini-editor"><div>atividade.py</div><textarea id="micro-code" spellcheck="false"></textarea></div><button class="btn success check-code">▶ Executar teste</button><div id="micro-feedback"></div>';
-    renderShell('<div class="micro-top"><a href="#/aprender">← Sair</a><div class="micro-bar"><span style="width:'+pct+'%"></span></div><strong>'+lesson.icon+' '+esc(lesson.title)+'</strong></div><section class="micro-stage">'+body+'</section>');
-    const next=()=>{state.xp+=5;save();if(stepIndex+1<lesson.steps.length)location.hash='#/micro/'+id+'/'+(stepIndex+1);else{markMicroDone(id);renderShell('<section class="lesson-win"><div>🏆</div><h1>Lição concluída!</h1><p>Você ganhou <strong>+30 XP</strong> e desbloqueou a próxima etapa.</p><a class="btn primary" href="#/aprender">Continuar trilha</a><a class="btn secondary" href="#/laboratorio">Praticar no VS Code</a></section>')}};
+    renderShell('<div class="micro-top"><a href="#/aprender">← Sair</a><div class="micro-bar"><span style="width:'+pct+'%"></span></div><strong>'+lesson.icon+' '+esc(lesson.title)+'</strong></div>'+study+'<section class="micro-stage">'+body+'</section>');
+    const next=()=>{state.xp+=5;save();if(safeIndex+1<lesson.steps.length){const nextIndex=safeIndex+1;history.pushState(null,'','#/micro/'+id+'/'+nextIndex);renderMicro(id,nextIndex);window.scrollTo({top:0,behavior:'auto'});}else{markMicroDone(id);renderShell('<section class="lesson-win"><div>🏆</div><h1>Lição concluída!</h1><p>Você ganhou <strong>+30 XP</strong> e desbloqueou a próxima etapa.</p><a class="btn primary" href="#/trilha">Continuar trilha</a><a class="btn secondary" href="#/laboratorio">Praticar no VS Code</a></section>')}};
     const feedback=(ok,msg)=>{const el=document.querySelector('#micro-feedback');el.innerHTML='<div class="feedback '+(ok?'good':'bad')+'"><strong>'+(ok?'✓ Muito bem!':'✕ Tente novamente')+'</strong><p>'+esc(msg)+'</p>'+(ok?'<button class="btn primary continue-step">Continuar</button>':'')+'</div>';if(ok)el.querySelector('.continue-step').onclick=next;else{state.hearts=Math.max(0,state.hearts-1);save();}};
     const nb=document.querySelector('.micro-next');if(nb)nb.onclick=next;
     document.querySelectorAll('.micro-choice').forEach(b=>b.onclick=()=>{const ok=Number(b.dataset.i)===s.c;feedback(ok,ok?s.why:'Observe a explicação e tente outra opção.');});
