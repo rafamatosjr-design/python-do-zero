@@ -56,37 +56,22 @@
   }
   
   function practicalSteps(x,i){
-    const title=x[0], explanation=x[1], choices=x[3], correct=x[4], right=choices[correct];
-    const wrong=choices.filter((_,n)=>n!==correct);
-    const token=(String(right).match(/[A-Za-z_][A-Za-z0-9_.]*/)||[String(right)])[0];
-    const contexts=[
-      'Você está escrevendo um programa no VS Code. Qual opção resolve corretamente a necessidade apresentada?',
-      'Observe o problema como se ele aparecesse em um projeto real. Qual alternativa você usaria?',
-      'Um código precisa ser corrigido antes de ser executado. Qual escolha faz sentido neste caso?',
-      'Você precisa explicar sua decisão para outro programador. Qual alternativa é tecnicamente adequada?'
-    ];
+    const title=x[0], explanation=x[1], choices=x[3], correct=x[4];
+    const token=(String(choices[correct]).match(/[A-Za-z_][A-Za-z0-9_.]*/)||[String(choices[correct])])[0];
     const base=[{t:'learn',title,body:explanation},{t:'choice',q:x[2],a:choices,c:correct,why:explanation}];
-    if(i<18){
-      const distractors=wrong.length>=2?wrong:['Usar uma estrutura de outro objetivo','Executar sem considerar o problema'];
-      base.push({t:'choice',q:contexts[i%contexts.length],a:[right,...distractors].slice(0,3),c:0,why:'A escolha correta precisa atender ao objetivo da missão, não apenas parecer um comando válido.'});
-      const orders=[
-        ['Ler o que o programa precisa fazer','Identificar os dados ou estruturas necessários','Escolher a solução','Executar e conferir o resultado'],
-        ['Entender a entrada','Definir o processamento','Produzir a saída','Testar com outro valor'],
-        ['Ler o código','Prever o resultado','Executar','Comparar previsão e resultado']
-      ],ord=orders[i%orders.length];
-      base.push({t:'order',q:'Organize o raciocínio para resolver esta situação:',items:[ord[2],ord[0],ord[3],ord[1]],answer:ord});
-    } else if(i<45){
-      base.push({t:'choice',q:contexts[i%contexts.length],a:[right,...wrong].slice(0,3),c:0,why:'Agora você escolhe a solução pelo comportamento esperado.'});
-      base.push({t:'fill',q:'Sem olhar as alternativas: escreva o comando, palavra ou estrutura central desta missão.',before:'Resposta: ____',answer:token,hint:'Pense na resposta que resolveu o problema anterior.'});
-    } else {
-      const orders=[
-        ['Interpretar o requisito','Planejar uma solução pequena','Implementar','Testar casos diferentes','Corrigir se necessário'],
-        ['Identificar o erro','Descobrir a causa','Fazer uma alteração mínima','Executar novamente','Confirmar o comportamento']
-      ],ord=orders[i%orders.length];
-      base.push({t:'order',q:'Coloque as etapas de desenvolvimento na ordem mais segura:',items:[ord[2],ord[4],ord[0],ord[3],ord[1]],answer:ord});
-      base.push({t:'code',q:'Desafio prático — '+title+': escreva no editor uma solução curta que demonstre o conceito desta missão. Depois teste e ajuste o que for necessário.',test:'',contains:''});
+
+    // Uma pergunta conceitual por missão. As etapas extras só aparecem quando
+    // realmente acrescentam uma habilidade nova; não repetem a resposta anterior.
+    if(i>=12 && i<35){
+      base.push({t:'fill',q:'Agora sem alternativas: escreva o comando, palavra ou estrutura principal desta missão.',before:'Resposta: ____',answer:token,hint:'Use o conceito apresentado nesta missão.'});
+    } else if(i>=35 && i<60){
+      base.push({t:'code',q:'Aplique '+title+' em um exemplo curto no editor. Crie seu próprio exemplo em vez de repetir a alternativa anterior.',test:'',contains:''});
+    } else if(i>=60){
+      base.push({t:'code',q:'Desafio prático — '+title+': resolva uma situação curta usando este conceito. Escreva a solução e teste o comportamento.',test:'',contains:''});
     }
-    if((i+1)%10===0) base.push({t:'code',q:'Checkpoint: crie uma solução curta usando '+title+' e pelo menos um conceito de uma missão anterior. Evite apenas copiar o exemplo da explicação.',test:'',contains:''});
+
+    // Checkpoints substituem perguntas repetitivas por integração de conteúdos.
+    if((i+1)%10===0) base.push({t:'code',q:'Checkpoint: produza uma solução curta combinando '+title+' com pelo menos um conceito aprendido anteriormente.',test:'',contains:''});
     return base;
   }
 
