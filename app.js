@@ -261,7 +261,7 @@
     if (pages[route.page]) pages[route.page]();
     else if (route.page === 'modulo') renderModule(route.id);
     else if (route.page === 'aula') renderLesson(route.id);
-    else location.hash = '#/inicio';
+    else if (!['trilha','aprender','micro','praticar','laboratorio','tutor','desafios'].includes(route.page)) location.hash = '#/inicio';
     window.scrollTo({ top: 0, behavior: 'auto' });
   }
 
