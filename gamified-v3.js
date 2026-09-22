@@ -58,37 +58,35 @@
   function practicalSteps(x,i){
     const title=x[0], explanation=x[1], choices=x[3], correct=x[4], right=choices[correct];
     const wrong=choices.filter((_,n)=>n!==correct);
-    const codeWord=(String(right).match(/[A-Za-z_][A-Za-z0-9_.]*/)||[String(right)])[0];
-    const scenarios=[
-      'Você está construindo uma pequena aplicação e precisa aplicar este conceito corretamente.',
-      'Um colega deixou uma solução incompleta. Escolha a alternativa que realmente resolve o problema.',
-      'Imagine que este trecho fará parte de um projeto real. Qual decisão é tecnicamente adequada?',
-      'Você encontrou um bug durante um exercício. Qual opção demonstra que você entendeu o conceito?',
-      'Antes de abrir o VS Code, escolha a estratégia que produz o comportamento esperado.'
+    const token=(String(right).match(/[A-Za-z_][A-Za-z0-9_.]*/)||[String(right)])[0];
+    const contexts=[
+      'Você está escrevendo um programa no VS Code. Qual opção resolve corretamente a necessidade apresentada?',
+      'Observe o problema como se ele aparecesse em um projeto real. Qual alternativa você usaria?',
+      'Um código precisa ser corrigido antes de ser executado. Qual escolha faz sentido neste caso?',
+      'Você precisa explicar sua decisão para outro programador. Qual alternativa é tecnicamente adequada?'
     ];
-    const scenario=scenarios[i%scenarios.length];
-    const base=[{t:'learn',title:title,body:explanation},{t:'choice',q:x[2],a:choices,c:correct,why:explanation}];
-    if(i<12){
-      base.push({t:'choice',q:scenario,a:[right,...wrong].slice(0,3),c:0,why:'A resposta aplica diretamente o conceito desta missão.'});
-      if([0,4,8,11].includes(i)) base.push({t:'order',q:'Organize o raciocínio antes de resolver:',items:['Testar o resultado','Entender a entrada e o objetivo','Escolher a operação necessária'],answer:['Entender a entrada e o objetivo','Escolher a operação necessária','Testar o resultado']});
-    } else if(i<30){
-      const tasks=[
-        ['Qual trecho faz uma decisão baseada em uma condição?',['if idade >= 18:','print(idade)','idade = input()'],0],
-        ['Qual estrutura é mais adequada para repetir uma quantidade conhecida de vezes?',['for','if','try'],0],
-        ['Qual estrutura guarda vários itens que podem mudar?',['list','str','bool'],0],
-        ['Qual opção devolve um resultado de uma função?',['return','print','import'],0]
-      ],t=tasks[i%tasks.length];
-      base.push({t:'choice',q:t[0],a:t[1],c:t[2],why:'Aqui você começa a escolher estruturas pelo problema, não apenas pelo nome.'});
-      base.push({t:'fill',q:'Complete somente a parte essencial desta missão:',before:'Comando/conceito: ____',answer:codeWord,hint:'Use a palavra ou comando central que você acabou de aplicar.'});
-    } else if(i<60){
-      const debug=['Leia o objetivo','Localize a parte suspeita','Compare com a sintaxe/conceito correto','Corrija e teste'];
-      base.push({t:'order',q:'Você recebeu um código com problema. Ordene um processo de depuração responsável:',items:[debug[2],debug[0],debug[3],debug[1]],answer:debug});
-      base.push({t:'fill',q:'Sem alternativas agora: escreva o elemento central usado nesta missão.',before:'____',answer:codeWord,hint:'Pense no recurso que resolve o problema apresentado.'});
+    const base=[{t:'learn',title,body:explanation},{t:'choice',q:x[2],a:choices,c:correct,why:explanation}];
+    if(i<18){
+      const distractors=wrong.length>=2?wrong:['Usar uma estrutura de outro objetivo','Executar sem considerar o problema'];
+      base.push({t:'choice',q:contexts[i%contexts.length],a:[right,...distractors].slice(0,3),c:0,why:'A escolha correta precisa atender ao objetivo da missão, não apenas parecer um comando válido.'});
+      const orders=[
+        ['Ler o que o programa precisa fazer','Identificar os dados ou estruturas necessários','Escolher a solução','Executar e conferir o resultado'],
+        ['Entender a entrada','Definir o processamento','Produzir a saída','Testar com outro valor'],
+        ['Ler o código','Prever o resultado','Executar','Comparar previsão e resultado']
+      ],ord=orders[i%orders.length];
+      base.push({t:'order',q:'Organize o raciocínio para resolver esta situação:',items:[ord[2],ord[0],ord[3],ord[1]],answer:ord});
+    } else if(i<45){
+      base.push({t:'choice',q:contexts[i%contexts.length],a:[right,...wrong].slice(0,3),c:0,why:'Agora você escolhe a solução pelo comportamento esperado.'});
+      base.push({t:'fill',q:'Sem olhar as alternativas: escreva o comando, palavra ou estrutura central desta missão.',before:'Resposta: ____',answer:token,hint:'Pense na resposta que resolveu o problema anterior.'});
     } else {
-      base.push({t:'choice',q:scenario,a:[right,...wrong].slice(0,3),c:0,why:'Escolher a ferramenta certa continua importante mesmo em conteúdos avançados.'});
-      base.push({t:'code',q:'Mini desafio — '+title+': escreva um exemplo curto que demonstre este conceito. Explique pelo próprio código o que ele faz.',test:'',contains:''});
+      const orders=[
+        ['Interpretar o requisito','Planejar uma solução pequena','Implementar','Testar casos diferentes','Corrigir se necessário'],
+        ['Identificar o erro','Descobrir a causa','Fazer uma alteração mínima','Executar novamente','Confirmar o comportamento']
+      ],ord=orders[i%orders.length];
+      base.push({t:'order',q:'Coloque as etapas de desenvolvimento na ordem mais segura:',items:[ord[2],ord[4],ord[0],ord[3],ord[1]],answer:ord});
+      base.push({t:'code',q:'Desafio prático — '+title+': escreva no editor uma solução curta que demonstre o conceito desta missão. Depois teste e ajuste o que for necessário.',test:'',contains:''});
     }
-    if((i+1)%10===0) base.push({t:'code',q:'Checkpoint do módulo: crie uma solução curta combinando '+title+' com pelo menos um conceito aprendido anteriormente.',test:'',contains:''});
+    if((i+1)%10===0) base.push({t:'code',q:'Checkpoint: crie uma solução curta usando '+title+' e pelo menos um conceito de uma missão anterior. Evite apenas copiar o exemplo da explicação.',test:'',contains:''});
     return base;
   }
 
