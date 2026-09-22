@@ -58,21 +58,28 @@
   
   function practicalSteps(x,i){
     const title=x[0], explanation=x[1], choices=x[3], correct=x[4];
-    const token=(String(choices[correct]).match(/[A-Za-z_][A-Za-z0-9_.]*/)||[String(choices[correct])])[0];
+    const right=choices[correct], token=(String(right).match(/[A-Za-z_][A-Za-z0-9_.]*/)||[String(right)])[0];
     const base=[{t:'learn',title,body:explanation},{t:'choice',q:x[2],a:choices,c:correct,why:explanation}];
 
-    // Uma pergunta conceitual por missão. As etapas extras só aparecem quando
-    // realmente acrescentam uma habilidade nova; não repetem a resposta anterior.
-    if(i>=12 && i<35){
-      base.push({t:'fill',q:'Agora sem alternativas: escreva o comando, palavra ou estrutura principal desta missão.',before:'Resposta: ____',answer:token,hint:'Use o conceito apresentado nesta missão.'});
-    } else if(i>=35 && i<60){
-      base.push({t:'code',q:'Aplique '+title+' em um exemplo curto no editor. Crie seu próprio exemplo em vez de repetir a alternativa anterior.',test:'',contains:''});
-    } else if(i>=60){
-      base.push({t:'code',q:'Desafio prático — '+title+': resolva uma situação curta usando este conceito. Escreva a solução e teste o comportamento.',test:'',contains:''});
+    // Reforço sem repetir a mesma pergunta: cada faixa trabalha uma habilidade diferente.
+    if(i<20){
+      const checks=[
+        {q:'Antes de executar, qual atitude ajuda mais a descobrir se sua solução está correta?',a:['Prever o resultado e depois testar','Trocar de linguagem','Adicionar comandos aleatórios'],c:0},
+        {q:'Ao receber um exercício novo, qual é o melhor primeiro passo?',a:['Identificar o que entra, o que precisa acontecer e o resultado esperado','Começar a digitar sem ler','Procurar um código grande para copiar'],c:0},
+        {q:'Se o resultado do programa não for o esperado, o que você deve fazer primeiro?',a:['Comparar o resultado obtido com o que era esperado','Apagar o projeto','Instalar outra linguagem'],c:0}
+      ],q=checks[i%checks.length];
+      if((i+1)%3===0) base.push({t:'choice',q:q.q,a:q.a,c:q.c,why:'O objetivo é desenvolver raciocínio de programação, não apenas memorizar comandos.'});
+    } else if(i<50){
+      base.push({t:'fill',q:'Agora sem alternativas: escreva o comando, palavra ou estrutura principal desta missão.',before:'Resposta: ____',answer:token,hint:'Recupere da memória o elemento central usado para resolver o problema.'});
+      if((i+1)%4===0) base.push({t:'code',q:'Prática curta — '+title+': escreva um exemplo diferente do mostrado na explicação.',test:'',contains:''});
+    } else {
+      base.push({t:'code',q:'Aplicação — '+title+': crie um exemplo curto que use este conceito com uma finalidade clara.',test:'',contains:''});
+      if((i+1)%3===0) base.push({t:'code',q:'Variação: resolva novamente mudando os dados ou a situação, sem copiar a solução anterior.',test:'',contains:''});
     }
 
-    // Checkpoints substituem perguntas repetitivas por integração de conteúdos.
-    if((i+1)%10===0) base.push({t:'code',q:'Checkpoint: produza uma solução curta combinando '+title+' com pelo menos um conceito aprendido anteriormente.',test:'',contains:''});
+    // Revisões acumulativas dão mais questões a cada conjunto de conteúdos.
+    if((i+1)%5===0) base.push({t:'choice',q:'Nesta etapa, o que demonstra melhor que você aprendeu '+title+'?',a:['Conseguir escolher e aplicar o recurso adequado em um problema','Reconhecer apenas o nome do assunto','Copiar uma solução sem entender'],c:0,why:'Aprender programação significa saber quando e como aplicar o conceito.'});
+    if((i+1)%10===0) base.push({t:'code',q:'Checkpoint do módulo: resolva uma tarefa curta combinando '+title+' com pelo menos um conceito das missões anteriores.',test:'',contains:''});
     return base;
   }
 
