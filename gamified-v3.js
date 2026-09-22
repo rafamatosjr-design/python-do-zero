@@ -2,10 +2,11 @@
   'use strict';
   const DATA = window.PDZ_DATA;
   if (!DATA) { console.error('Gamificação: PDZ_DATA não carregado.'); return; }
-  const KEY = 'devquest.game.v1';
+  const KEY = 'devquest.game.v2';
   const state = Object.assign({xp:0, hearts:5, streak:1, level:1, correct:0, answered:0}, JSON.parse(localStorage.getItem(KEY)||'{}'));
   const save=()=>localStorage.setItem(KEY,JSON.stringify(state));
-  const microDoneSet=()=>new Set(JSON.parse(localStorage.getItem('devquest.micro.done')||'[]'));
+  const MICRO_DONE_KEY='devquest.micro.done.v2';
+  const microDoneSet=()=>new Set(JSON.parse(localStorage.getItem(MICRO_DONE_KEY)||'[]'));
   const topicCount=()=>microLessons.length;
   const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
   const quizBank=[
@@ -109,8 +110,8 @@
     ]}
   ];
   if(generatedLessons.length) { microLessons.splice(0,microLessons.length,...generatedLessons); }
-  function lessonProgress(){try{return JSON.parse(localStorage.getItem('devquest.micro.done')||'[]')}catch{return []}}
-  function markMicroDone(id){const d=new Set(lessonProgress());d.add(id);localStorage.setItem('devquest.micro.done',JSON.stringify([...d]));state.xp+=30;state.level=1+Math.floor(state.xp/100);save();}
+  function lessonProgress(){try{return JSON.parse(localStorage.getItem(MICRO_DONE_KEY)||'[]')}catch{return []}}
+  function markMicroDone(id){const d=new Set(lessonProgress());d.add(id);localStorage.setItem(MICRO_DONE_KEY,JSON.stringify([...d]));state.xp+=30;state.level=1+Math.floor(state.xp/100);save();}
   function renderLearn(){
     const done=new Set(lessonProgress());
     renderShell('<header class="page-header"><div><div class="eyebrow">Microlições</div><h1>Aprender</h1><p class="muted">Lições curtas e práticas. No início você escolhe e ordena respostas; aos poucos passa a completar e escrever código sozinho.</p></div></header><div class="micro-grid">'+microLessons.map((l,i)=>{const locked=i>0&&!done.has(microLessons[i-1].id);return '<article class="micro-card '+(locked?'locked':'')+'"><span class="micro-icon">'+l.icon+'</span><div><small>Lição '+l.id+'</small><h3>'+esc(l.title)+'</h3><p>'+l.steps.length+' etapas · +30 XP</p></div>'+(locked?'<button class="btn ghost" disabled>🔒 Bloqueada</button>':'<a class="btn primary" href="#/micro/'+l.id+'">'+(done.has(l.id)?'Revisar':'Começar')+'</a>')+'</article>'}).join('')+'</div>');
@@ -122,7 +123,7 @@
     if(s.t==='learn') body='<div class="micro-explain"><span class="big-icon">'+lesson.icon+'</span><h2>'+esc(s.title)+'</h2><p>'+esc(s.body)+'</p><button class="btn primary micro-next">Entendi, continuar</button></div>';
     if(s.t==='choice') body='<h2>'+esc(s.q)+'</h2><div class="quiz-options">'+s.a.map((a,i)=>'<button class="quiz-option micro-choice" data-i="'+i+'"><b>'+String.fromCharCode(65+i)+'</b>'+esc(a)+'</button>').join('')+'</div><div id="micro-feedback"></div>';
     if(s.t==='fill') body='<h2>'+esc(s.q)+'</h2><pre class="code-task">'+esc(s.before)+'</pre><input id="fill-answer" class="code-input" autocomplete="off" placeholder="Digite a parte que falta"><p class="muted">💡 '+esc(s.hint)+'</p><button class="btn primary check-fill">Verificar</button><div id="micro-feedback"></div>';
-    if(s.t==='order') body='<h2>'+esc(s.q)+'</h2><p class="muted">Clique nos passos na ordem correta.</p><div class="order-bank">'+s.items.map((x,i)=>'<button class="order-item" data-text="'+esc(x)+'">'+esc(x)+'</button>').join('')+'</div><div id="order-selected" class="order-selected"></div><button class="btn primary check-order">Verificar ordem</button><div id="micro-feedback"></div>';
+    if(s.t==='order') body='<h2>'+esc(s.q)+'</h2><p class="muted">Clique nos passos na ordem correta. Se mudar de ideia, clique em um item escolhido para devolvê-lo à lista.</p><div class="order-bank">'+s.items.map((x,i)=>'<button class="order-item" data-order-id="'+i+'">'+esc(x)+'</button>').join('')+'</div><div id="order-selected" class="order-selected"></div><div class="actions"><button class="btn secondary reset-order">↻ Recomeçar</button><button class="btn primary check-order">Verificar ordem</button></div><div id="micro-feedback"></div>';
     if(s.t==='code') body='<h2>'+esc(s.q)+'</h2><div class="mini-editor"><div>atividade.py</div><textarea id="micro-code" spellcheck="false"></textarea></div><button class="btn success check-code">▶ Executar teste</button><div id="micro-feedback"></div>';
     renderShell('<div class="micro-top"><a href="#/aprender">← Sair</a><div class="micro-bar"><span style="width:'+pct+'%"></span></div><strong>'+lesson.icon+' '+esc(lesson.title)+'</strong></div><section class="micro-stage">'+body+'</section>');
     const next=()=>{state.xp+=5;save();if(stepIndex+1<lesson.steps.length)location.hash='#/micro/'+id+'/'+(stepIndex+1);else{markMicroDone(id);renderShell('<section class="lesson-win"><div>🏆</div><h1>Lição concluída!</h1><p>Você ganhou <strong>+30 XP</strong> e desbloqueou a próxima etapa.</p><a class="btn primary" href="#/aprender">Continuar trilha</a><a class="btn secondary" href="#/laboratorio">Praticar no VS Code</a></section>')}};
@@ -130,7 +131,26 @@
     const nb=document.querySelector('.micro-next');if(nb)nb.onclick=next;
     document.querySelectorAll('.micro-choice').forEach(b=>b.onclick=()=>{const ok=Number(b.dataset.i)===s.c;feedback(ok,ok?s.why:'Observe a explicação e tente outra opção.');});
     const cf=document.querySelector('.check-fill');if(cf)cf.onclick=()=>feedback(document.querySelector('#fill-answer').value.trim()===s.answer,s.hint);
-    let selected=[];document.querySelectorAll('.order-item').forEach(b=>b.onclick=()=>{if(b.disabled)return;b.disabled=true;selected.push(b.dataset.text);document.querySelector('#order-selected').innerHTML=selected.map((x,i)=>'<span>'+(i+1)+'. '+esc(x)+'</span>').join('');});const co=document.querySelector('.check-order');if(co)co.onclick=()=>{const ok=JSON.stringify(selected)===JSON.stringify(s.answer);if(ok){feedback(true,'Ordem correta.');return;}state.hearts=Math.max(0,state.hearts-1);save();const el=document.querySelector('#micro-feedback');el.innerHTML='<div class="feedback bad"><strong>✕ A ordem ainda não está correta</strong><p>Reorganize os passos e tente novamente.</p><button class="btn secondary retry-order">↻ Reorganizar lista</button></div>';el.querySelector('.retry-order').onclick=()=>{selected=[];document.querySelector('#order-selected').innerHTML='';document.querySelectorAll('.order-item').forEach(b=>b.disabled=false);el.innerHTML='';};};
+    let selected=[];
+    const orderButtons=[...document.querySelectorAll('.order-item')];
+    const drawOrder=()=>{
+      const chosen=document.querySelector('#order-selected'); if(!chosen)return;
+      chosen.innerHTML=selected.map((idx,pos)=>'<button class="order-picked" data-pos="'+pos+'"><b>'+(pos+1)+'.</b> '+esc(s.items[idx])+' <span>×</span></button>').join('');
+      orderButtons.forEach((b,idx)=>b.disabled=selected.includes(idx));
+      chosen.querySelectorAll('.order-picked').forEach(b=>b.onclick=()=>{selected.splice(Number(b.dataset.pos),1);drawOrder();});
+    };
+    orderButtons.forEach((b,idx)=>b.onclick=()=>{if(!selected.includes(idx)){selected.push(idx);drawOrder();}});
+    const resetOrder=()=>{selected=[];drawOrder();const el=document.querySelector('#micro-feedback');if(el)el.innerHTML='';};
+    const ro=document.querySelector('.reset-order');if(ro)ro.onclick=resetOrder;
+    const co=document.querySelector('.check-order');if(co)co.onclick=()=>{
+      const expected=s.answer.map(answer=>s.items.indexOf(answer));
+      const ok=selected.length===expected.length&&selected.every((v,n)=>v===expected[n]);
+      if(ok){feedback(true,'Ordem correta.');return;}
+      state.hearts=Math.max(0,state.hearts-1);save();
+      const el=document.querySelector('#micro-feedback');
+      el.innerHTML='<div class="feedback bad"><strong>✕ A sequência ainda não está correta</strong><p>Você pode retirar itens escolhidos ou recomeçar a lista e tentar outra ordem.</p><button class="btn secondary retry-order">↻ Reorganizar agora</button></div>';
+      el.querySelector('.retry-order').onclick=resetOrder;
+    };
     const cc=document.querySelector('.check-code');if(cc)cc.onclick=()=>{const v=document.querySelector('#micro-code').value;feedback(s.test==='' ? v.trim().length>=3 : (v.includes(s.test)&&v.includes(s.contains)),s.test===''?'Escreva um pequeno exemplo ou anotação antes de executar.':'Seu código precisa usar '+s.test+' e atender ao pedido da atividade.');};
   }
 
