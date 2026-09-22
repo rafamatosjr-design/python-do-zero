@@ -55,12 +55,27 @@
     document.querySelector('#run-code').onclick=()=>{const code=ta.value; let result=[]; const prints=[...code.matchAll(/print\((?:f)?["']([^"']*)["']\)/g)]; if(code.includes('input(')) result.push('Entrada simulada: Júlia'); prints.forEach(m=>result.push(m[1].replace('{nome}','Júlia'))); if(!result.length) result.push('Código recebido. Este laboratório libera mais testes conforme as lições.'); state.xp+=2;save();out.textContent='$ python aula.py\n'+result.join('\n')+'\n\n+2 XP por praticar';};
   }
   
-  const generatedLessons=(window.DEVQUEST_TOPICS||[]).map((x,i)=>({id:i+1,title:x[0],icon:i<30?'🐍':i<50?'☕':i<54?'🌿':i<63?'🌐':i<69?'⚛️':i<77?'🔌':i<82?'🗄️':i<84?'🧩':i<86?'🌐':i<88?'🐧':i<90?'🚀':'🛡️',steps:[
-    {t:'learn',title:x[0],body:x[1]},
-    {t:'choice',q:x[2],a:x[3],c:x[4],why:x[1]},
-    {t:'fill',q:'Complete uma palavra ou comando importante desta lição:',before:'Resposta: ____',answer:(x[3][x[4]].match(/[A-Za-z_]+/)||[x[3][x[4]]])[0],hint:'Revise a resposta correta da etapa anterior.'},
-    {t:'code',q:'Registre no editor um exemplo ou anotação prática sobre '+x[0]+'.',test:'',contains:''}
-  ]}));
+  function practicalSteps(x,i){
+    const title=x[0], explanation=x[1], choices=x[3], correct=x[4], right=choices[correct];
+    const base=[
+      {t:'learn',title:title,body:explanation},
+      {t:'choice',q:x[2],a:choices,c:correct,why:explanation}
+    ];
+    if(i<18){
+      base.push({t:'choice',q:'Qual opção combina melhor com o que você acabou de aprender?',a:[right,'Uma alternativa que não resolve o objetivo','Um comando sem relação com esta etapa'],c:0,why:'Nesta fase você aprende reconhecendo padrões corretos antes de precisar escrever tudo sozinho.'});
+      base.push({t:'order',q:'Monte a solução escolhendo os passos na ordem correta:',items:['Executar ou conferir o resultado','Entender o que o exercício pede','Escolher o comando ou estrutura adequada'],answer:['Entender o que o exercício pede','Escolher o comando ou estrutura adequada','Executar ou conferir o resultado']});
+    } else if(i<45){
+      base.push({t:'fill',q:'Agora complete somente a parte principal da resposta:',before:'Resposta: ____',answer:(String(right).match(/[A-Za-z_][A-Za-z0-9_.]*/)||[String(right)])[0],hint:'Você já reconheceu a resposta; agora escreva apenas o comando ou palavra principal.'});
+      base.push({t:'choice',q:'Antes de escrever código, qual estratégia é melhor?',a:['Entender o problema e escolher a estrutura','Copiar qualquer solução pronta','Decorar sem testar'],c:0,why:'A escrita começa aos poucos, depois que o conceito já está claro.'});
+    } else {
+      base.push({t:'fill',q:'Escreva a palavra, estrutura ou comando central desta missão:',before:'Resposta: ____',answer:(String(right).match(/[A-Za-z_][A-Za-z0-9_.]*/)||[String(right)])[0],hint:'Use o conceito praticado nas etapas anteriores.'});
+      base.push({t:'code',q:'Resolva uma pequena parte sozinho no editor sobre '+title+'. Não precisa ser grande: escreva um exemplo funcional ou uma solução curta.',test:'',contains:''});
+    }
+    if((i+1)%8===0) base.push({t:'code',q:'Checkpoint prático: use o que aprendeu nas últimas missões para escrever uma solução curta no editor.',test:'',contains:''});
+    return base;
+  }
+
+  const generatedLessons=(window.DEVQUEST_TOPICS||[]).map((x,i)=>({id:i+1,title:x[0],icon:i<30?'🐍':i<50?'☕':i<54?'🌿':i<63?'🌐':i<69?'⚛️':i<77?'🔌':i<82?'🗄️':i<84?'🧩':i<86?'🌐':i<88?'🐧':i<90?'🚀':'🛡️',steps:practicalSteps(x,i)}));
   const microLessons=[
     {id:1,title:'Pense como um programador',icon:'🧠',steps:[
       {t:'learn',title:'O que é lógica?',body:'Programar começa antes do código. Lógica é organizar passos claros para transformar uma entrada em um resultado.'},
@@ -98,7 +113,7 @@
   function markMicroDone(id){const d=new Set(lessonProgress());d.add(id);localStorage.setItem('devquest.micro.done',JSON.stringify([...d]));state.xp+=30;state.level=1+Math.floor(state.xp/100);save();}
   function renderLearn(){
     const done=new Set(lessonProgress());
-    renderShell('<header class="page-header"><div><div class="eyebrow">Microlições</div><h1>Aprender</h1><p class="muted">Lições curtas. Uma habilidade por vez. A próxima etapa é liberada conforme você aprende.</p></div></header><div class="micro-grid">'+microLessons.map((l,i)=>{const locked=i>0&&!done.has(microLessons[i-1].id);return '<article class="micro-card '+(locked?'locked':'')+'"><span class="micro-icon">'+l.icon+'</span><div><small>Lição '+l.id+'</small><h3>'+esc(l.title)+'</h3><p>'+l.steps.length+' etapas · +30 XP</p></div>'+(locked?'<button class="btn ghost" disabled>🔒 Bloqueada</button>':'<a class="btn primary" href="#/micro/'+l.id+'">'+(done.has(l.id)?'Revisar':'Começar')+'</a>')+'</article>'}).join('')+'</div>');
+    renderShell('<header class="page-header"><div><div class="eyebrow">Microlições</div><h1>Aprender</h1><p class="muted">Lições curtas e práticas. No início você escolhe e ordena respostas; aos poucos passa a completar e escrever código sozinho.</p></div></header><div class="micro-grid">'+microLessons.map((l,i)=>{const locked=i>0&&!done.has(microLessons[i-1].id);return '<article class="micro-card '+(locked?'locked':'')+'"><span class="micro-icon">'+l.icon+'</span><div><small>Lição '+l.id+'</small><h3>'+esc(l.title)+'</h3><p>'+l.steps.length+' etapas · +30 XP</p></div>'+(locked?'<button class="btn ghost" disabled>🔒 Bloqueada</button>':'<a class="btn primary" href="#/micro/'+l.id+'">'+(done.has(l.id)?'Revisar':'Começar')+'</a>')+'</article>'}).join('')+'</div>');
   }
   function renderMicro(id,stepIndex=0){
     const lesson=microLessons.find(x=>x.id===id); if(!lesson){renderLearn();return}
