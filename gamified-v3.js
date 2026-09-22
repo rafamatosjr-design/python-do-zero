@@ -61,25 +61,41 @@
     const right=choices[correct], token=(String(right).match(/[A-Za-z_][A-Za-z0-9_.]*/)||[String(right)])[0];
     const base=[{t:'learn',title,body:explanation},{t:'choice',q:x[2],a:choices,c:correct,why:explanation}];
 
-    // Reforço sem repetir a mesma pergunta: cada faixa trabalha uma habilidade diferente.
-    if(i<20){
-      const checks=[
-        {q:'Antes de executar, qual atitude ajuda mais a descobrir se sua solução está correta?',a:['Prever o resultado e depois testar','Trocar de linguagem','Adicionar comandos aleatórios'],c:0},
-        {q:'Ao receber um exercício novo, qual é o melhor primeiro passo?',a:['Identificar o que entra, o que precisa acontecer e o resultado esperado','Começar a digitar sem ler','Procurar um código grande para copiar'],c:0},
-        {q:'Se o resultado do programa não for o esperado, o que você deve fazer primeiro?',a:['Comparar o resultado obtido com o que era esperado','Apagar o projeto','Instalar outra linguagem'],c:0}
-      ],q=checks[i%checks.length];
-      if((i+1)%3===0) base.push({t:'choice',q:q.q,a:q.a,c:q.c,why:'O objetivo é desenvolver raciocínio de programação, não apenas memorizar comandos.'});
-    } else if(i<50){
-      base.push({t:'fill',q:'Agora sem alternativas: escreva o comando, palavra ou estrutura principal desta missão.',before:'Resposta: ____',answer:token,hint:'Recupere da memória o elemento central usado para resolver o problema.'});
-      if((i+1)%4===0) base.push({t:'code',q:'Prática curta — '+title+': escreva um exemplo diferente do mostrado na explicação.',test:'',contains:''});
+    // Cada missão aprofunda o mesmo tema por ângulos diferentes: decisão,
+    // leitura de código, aplicação, depuração e transferência para outro contexto.
+    const foundations=[
+      {q:'Você terminou uma primeira solução para '+title+'. Qual próximo passo ajuda mais a confirmar que ela funciona em situações diferentes?',a:['Testar com dados diferentes e comparar os resultados esperados','Duplicar o mesmo código várias vezes','Trocar os nomes das variáveis sem testar'],c:0,why:'Testes com entradas diferentes ajudam a verificar o comportamento da solução.'},
+      {q:'Ao explicar sua solução de '+title+' para outra pessoa, o que demonstra melhor compreensão?',a:['Explicar por que cada parte existe e quando usá-la','Recitar o código sem explicar','Dizer apenas que o código funcionou'],c:0,why:'Compreender inclui justificar as escolhas feitas no código.'},
+      {q:'Um código usando '+title+' funciona em um caso, mas falha com outros dados. Qual atitude é mais útil?',a:['Investigar quais entradas causam o problema e revisar a lógica','Adicionar comandos aleatórios','Ignorar os casos que falharam'],c:0,why:'Comparar casos ajuda a localizar a causa do erro.'}
+    ];
+    const intermediate=[
+      {q:'Em um projeto, você encontrou duas soluções para '+title+'. Como escolher entre elas?',a:['Comparar clareza, correção e adequação ao problema','Escolher sempre a que tem mais linhas','Escolher a primeira sem testar'],c:0,why:'Uma boa solução precisa estar correta e ser adequada ao problema.'},
+      {q:'Você precisa modificar uma solução que usa '+title+'. O que reduz a chance de introduzir um erro?',a:['Entender o comportamento atual e testar depois da alteração','Alterar várias partes ao mesmo tempo sem testar','Apagar os testes existentes'],c:0,why:'Mudanças pequenas e verificadas tornam os erros mais fáceis de identificar.'},
+      {q:'Qual evidência é mais forte de que você domina '+title+'?',a:['Conseguir aplicar o conceito em um problema novo','Reconhecer o nome em uma lista','Memorizar um exemplo específico'],c:0,why:'Transferir o conceito para situações novas demonstra compreensão mais profunda.'}
+    ];
+    const advanced=[
+      {q:'Ao usar '+title+' em uma aplicação maior, qual prática facilita manutenção e depuração?',a:['Separar responsabilidades e testar partes menores','Concentrar toda a lógica em um único bloco','Evitar nomes descritivos'],c:0,why:'Partes menores e responsabilidades claras tornam o comportamento mais fácil de compreender e testar.'},
+      {q:'Uma solução com '+title+' produz o resultado certo, mas ficou difícil de entender. O que deve ser melhorado?',a:['Clareza e organização sem alterar o comportamento correto','Quantidade de linhas, aumentando-a','Complexidade, adicionando mais estruturas'],c:0,why:'Código correto também deve ser legível e sustentável.'},
+      {q:'Você precisa reutilizar o conhecimento de '+title+' em outro projeto. Qual abordagem é mais adequada?',a:['Identificar o princípio que se repete e adaptá-lo ao novo contexto','Copiar tudo sem verificar diferenças','Recomeçar sem aproveitar o conceito aprendido'],c:0,why:'A transferência de conhecimento exige reconhecer o princípio e adaptá-lo ao novo problema.'}
+    ];
+
+    const bank=i<20?foundations:(i<60?intermediate:advanced);
+    base.push(bank[i%bank.length]);
+
+    if(i<15){
+      if((i+1)%2===0) base.push({t:'fill',q:'Sem olhar as alternativas, escreva o principal comando, operador ou estrutura relacionado a '+title+'.',before:'Resposta: ____',answer:token,hint:'Pense no elemento central apresentado nesta missão.'});
+    } else if(i<40){
+      base.push({t:'fill',q:'Recupere da memória o elemento principal de '+title+' usado nesta missão.',before:'Resposta: ____',answer:token,hint:'Escreva apenas o comando, palavra ou estrutura principal.'});
+      if((i+1)%2===0) base.push({t:'code',q:'Crie um exemplo próprio de '+title+' usando dados diferentes dos exemplos anteriores.',test:'',contains:''});
     } else {
-      base.push({t:'code',q:'Aplicação — '+title+': crie um exemplo curto que use este conceito com uma finalidade clara.',test:'',contains:''});
-      if((i+1)%3===0) base.push({t:'code',q:'Variação: resolva novamente mudando os dados ou a situação, sem copiar a solução anterior.',test:'',contains:''});
+      base.push({t:'code',q:'Aplicação prática — '+title+': crie uma solução curta para um caso inventado por você e deixe claro qual resultado espera obter.',test:'',contains:''});
+      if((i+1)%2===0) base.push({t:'code',q:'Depuração — '+title+': escreva um exemplo, altere propositalmente uma parte importante e depois corrija para recuperar o comportamento esperado.',test:'',contains:''});
+      if((i+1)%3===0) base.push({t:'code',q:'Transferência — '+title+': use o mesmo conceito em um contexto diferente do exercício anterior.',test:'',contains:''});
     }
 
-    // Revisões acumulativas dão mais questões a cada conjunto de conteúdos.
-    if((i+1)%5===0) base.push({t:'choice',q:'Nesta etapa, o que demonstra melhor que você aprendeu '+title+'?',a:['Conseguir escolher e aplicar o recurso adequado em um problema','Reconhecer apenas o nome do assunto','Copiar uma solução sem entender'],c:0,why:'Aprender programação significa saber quando e como aplicar o conceito.'});
-    if((i+1)%10===0) base.push({t:'code',q:'Checkpoint do módulo: resolva uma tarefa curta combinando '+title+' com pelo menos um conceito das missões anteriores.',test:'',contains:''});
+    if((i+1)%5===0) base.push({t:'choice',q:'Depois destas missões, qual estratégia ajuda mais a consolidar '+title+'?',a:['Resolver um novo problema sem copiar a resposta anterior','Reler somente o título do conteúdo','Memorizar uma única solução'],c:0,why:'Resolver um problema novo exige recuperar e aplicar o conhecimento.'});
+    if((i+1)%5===0) base.push({t:'code',q:'Revisão acumulativa: combine '+title+' com um conceito estudado nas quatro missões anteriores.',test:'',contains:''});
+    if((i+1)%10===0) base.push({t:'code',q:'Desafio do bloco: desenvolva uma solução um pouco maior usando '+title+' e pelo menos dois conceitos anteriores. Teste com mais de um conjunto de dados.',test:'',contains:''});
     return base;
   }
 
